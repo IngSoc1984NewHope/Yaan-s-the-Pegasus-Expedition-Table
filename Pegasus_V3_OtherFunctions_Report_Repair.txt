@@ -1,0 +1,1523 @@
+THE PEGASUS EXPEDITION | V3 supplemental read-only diagnostics
+No game fields or managed methods are changed by this script.
+Human GrandPlayer: 0x1E6E2CDB900
+Combat Player (Main.HumanPlayer): 0x1E8905D7000
+
+=== OWNED FLEET REPAIR STATUS (up to first 30) ===
+Owned fleets: 61
+Fleet 1 ptr=0x1E8BE50E500 repairTurnsLeft=0 isRepairing=0
+Fleet 2 ptr=0x1E8BE50E000 repairTurnsLeft=0 isRepairing=0
+Fleet 3 ptr=0x1E8BEE0AE00 repairTurnsLeft=0 isRepairing=0
+Fleet 4 ptr=0x1E8BEE0AD00 repairTurnsLeft=1 isRepairing=1
+Fleet 5 ptr=0x1E8BEE0AC00 repairTurnsLeft=1 isRepairing=1
+Fleet 6 ptr=0x1E8BEE0AB00 repairTurnsLeft=0 isRepairing=0
+Fleet 7 ptr=0x1E8BEE0A500 repairTurnsLeft=0 isRepairing=0
+Fleet 8 ptr=0x1E8BEEF6900 repairTurnsLeft=0 isRepairing=0
+Fleet 9 ptr=0x1E8BEEF6400 repairTurnsLeft=0 isRepairing=0
+Fleet 10 ptr=0x1E8BEF71400 repairTurnsLeft=0 isRepairing=0
+Fleet 11 ptr=0x1E8BEF71300 repairTurnsLeft=0 isRepairing=0
+Fleet 12 ptr=0x1E8BEF71200 repairTurnsLeft=0 isRepairing=0
+Fleet 13 ptr=0x1E8BEF71100 repairTurnsLeft=0 isRepairing=0
+Fleet 14 ptr=0x1E8BF0C5E00 repairTurnsLeft=0 isRepairing=0
+Fleet 15 ptr=0x1E8BF18AE00 repairTurnsLeft=0 isRepairing=0
+Fleet 16 ptr=0x1E8BF18AA00 repairTurnsLeft=0 isRepairing=0
+Fleet 17 ptr=0x1E8BF20C800 repairTurnsLeft=0 isRepairing=0
+Fleet 18 ptr=0x1E88C854800 repairTurnsLeft=0 isRepairing=0
+Fleet 19 ptr=0x1E88C948F00 repairTurnsLeft=0 isRepairing=0
+Fleet 20 ptr=0x1E88C948800 repairTurnsLeft=0 isRepairing=0
+Fleet 21 ptr=0x1E88C9C7C00 repairTurnsLeft=0 isRepairing=0
+Fleet 22 ptr=0x1E88C9C7600 repairTurnsLeft=0 isRepairing=0
+Fleet 23 ptr=0x1E88CAD6500 repairTurnsLeft=0 isRepairing=0
+Fleet 24 ptr=0x1E88CB4DA00 repairTurnsLeft=0 isRepairing=0
+Fleet 25 ptr=0x1E88CB4D100 repairTurnsLeft=0 isRepairing=0
+Fleet 26 ptr=0x1E88CB4D000 repairTurnsLeft=0 isRepairing=0
+Fleet 27 ptr=0x1E88CC0DF00 repairTurnsLeft=0 isRepairing=0
+Fleet 28 ptr=0x1E88CC0D900 repairTurnsLeft=0 isRepairing=0
+Fleet 29 ptr=0x1E88CCAEF00 repairTurnsLeft=0 isRepairing=0
+Fleet 30 ptr=0x1E88CCAEE00 repairTurnsLeft=0 isRepairing=0
+
+=== OWNED SHIP CONSTRUCTION QUEUES (up to 70 stars, up to 15 units per star) ===
+Stars in human list: 43
+Star #20: 0x1E8A1054D10 queue=2
+  shipQueue 1 unit=0x1E88CBC6620 remaining=1 cumulative=1
+  shipQueue 2 unit=0x1E88CBC65B0 remaining=2 cumulative=1
+Star #30: 0x1E88C158260 queue=18
+  shipQueue 1 unit=0x1E88D22E5B0 remaining=1 cumulative=1
+  shipQueue 2 unit=0x1E88D22E540 remaining=1 cumulative=1
+  shipQueue 3 unit=0x1E88D22E4D0 remaining=1 cumulative=1
+  shipQueue 4 unit=0x1E88D22E460 remaining=1 cumulative=2
+  shipQueue 5 unit=0x1E88D22E3F0 remaining=1 cumulative=2
+  shipQueue 6 unit=0x1E88D22E380 remaining=1 cumulative=2
+  shipQueue 7 unit=0x1E88D22E230 remaining=1 cumulative=3
+  shipQueue 8 unit=0x1E88D22E1C0 remaining=1 cumulative=3
+  shipQueue 9 unit=0x1E88D22E150 remaining=1 cumulative=3
+  shipQueue 10 unit=0x1E88D22E0E0 remaining=1 cumulative=4
+  shipQueue 11 unit=0x1E88D22E070 remaining=1 cumulative=4
+  shipQueue 12 unit=0x1E88D22E000 remaining=1 cumulative=4
+  shipQueue 13 unit=0x1E88D26DF50 remaining=1 cumulative=5
+  shipQueue 14 unit=0x1E88D26DEE0 remaining=1 cumulative=5
+  shipQueue 15 unit=0x1E88D26DE70 remaining=1 cumulative=5
+Queued owned stars: 2; ship entries sampled: 17
+
+=== BATTLE UNITS / SHIPS (first 8 units, up to 8 ships each) ===
+Combat human unit count = 50
+Battle unit 1 ptr=0x1E890528300 owner=0x1E8905D7000 isHuman=true ships=1
+  ship 1 obj=0x1E8B7987A80 hpRaw=179200 maxRaw=179200
+Battle unit 2 ptr=0x1E890528200 owner=0x1E8905D7000 isHuman=true ships=1
+  ship 1 obj=0x1E8C1096A80 hpRaw=42240 maxRaw=42240
+Battle unit 3 ptr=0x1E890528100 owner=0x1E8905D7000 isHuman=true ships=5
+  ship 1 obj=0x1E8C1096C00 hpRaw=42240 maxRaw=42240
+  ship 2 obj=0x1E8C1096D80 hpRaw=42240 maxRaw=42240
+  ship 3 obj=0x1E8C1095000 hpRaw=42240 maxRaw=42240
+  ship 4 obj=0x1E8C1095180 hpRaw=42240 maxRaw=42240
+  ship 5 obj=0x1E8C1095300 hpRaw=42240 maxRaw=42240
+Battle unit 4 ptr=0x1E890528000 owner=0x1E8905D7000 isHuman=true ships=6
+  ship 1 obj=0x1E8C1095480 hpRaw=42240 maxRaw=42240
+  ship 2 obj=0x1E8C1095600 hpRaw=42240 maxRaw=42240
+  ship 3 obj=0x1E8C1095780 hpRaw=42240 maxRaw=42240
+  ship 4 obj=0x1E8C1095900 hpRaw=42240 maxRaw=42240
+  ship 5 obj=0x1E8C1095A80 hpRaw=42240 maxRaw=42240
+  ship 6 obj=0x1E8C1095C00 hpRaw=42240 maxRaw=42240
+Battle unit 5 ptr=0x1E8C6ADEF00 owner=0x1E8905D7000 isHuman=true ships=2
+  ship 1 obj=0x1E8C1095D80 hpRaw=42240 maxRaw=42240
+  ship 2 obj=0x1E8C1093000 hpRaw=42240 maxRaw=42240
+Battle unit 6 ptr=0x1E8C6ADED00 owner=0x1E8905D7000 isHuman=true ships=5
+  ship 1 obj=0x1E8C1093480 hpRaw=42240 maxRaw=42240
+  ship 2 obj=0x1E8C1093600 hpRaw=42240 maxRaw=42240
+  ship 3 obj=0x1E8C1093780 hpRaw=42240 maxRaw=42240
+  ship 4 obj=0x1E8C1093900 hpRaw=42240 maxRaw=42240
+  ship 5 obj=0x1E8C1093A80 hpRaw=42240 maxRaw=42240
+Battle unit 7 ptr=0x1E8C6ADEA00 owner=0x1E8905D7000 isHuman=true ships=7
+  ship 1 obj=0x1E8C109B180 hpRaw=17920 maxRaw=17920
+  ship 2 obj=0x1E8C109B300 hpRaw=17920 maxRaw=17920
+  ship 3 obj=0x1E8C109B480 hpRaw=17920 maxRaw=17920
+  ship 4 obj=0x1E8C109B600 hpRaw=17920 maxRaw=17920
+  ship 5 obj=0x1E8C109B780 hpRaw=17920 maxRaw=17920
+  ship 6 obj=0x1E8C109B900 hpRaw=17920 maxRaw=17920
+  ship 7 obj=0x1E8C109BA80 hpRaw=17920 maxRaw=17920
+Battle unit 8 ptr=0x1E8C6ADE900 owner=0x1E8905D7000 isHuman=true ships=5
+  ship 1 obj=0x1E8C109BC00 hpRaw=17920 maxRaw=17920
+  ship 2 obj=0x1E8C109BD80 hpRaw=17920 maxRaw=17920
+  ship 3 obj=0x1E8C1099000 hpRaw=17920 maxRaw=17920
+  ship 4 obj=0x1E8C1099180 hpRaw=17920 maxRaw=17920
+  ship 5 obj=0x1E8C1099300 hpRaw=17920 maxRaw=17920
+
+=== MONO METHOD SIGNATURES + IL (READ ONLY) ===
+
+--- class ShipC ---
+
+[method ShipC.TakeDamage, id=0x1E56D3B66B0]
+Signature: FixedPoint
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x0400065c
+IL_0006: ldarg.1   
+IL_0007: call      0x06000f95
+IL_000c: stloc.0   
+IL_000d: ldarg.0   
+IL_000e: ldarg.0   
+IL_000f: ldfld     0x0400065c
+IL_0014: ldloc.0   
+IL_0015: call      0x06000f8b
+IL_001a: stfld     0x0400065c
+IL_001f: ldloc.0   
+IL_0020: ret       
+
+
+[method ShipC.TakeWaveDamage, id=0x1E56D3B6778]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x06000982
+IL_0006: ldarg.0   
+IL_0007: ldfld     0x0400065e
+IL_000c: ldarg.0   
+IL_000d: ldc.i4.0  
+IL_000e: callvirt  0x06000a95
+IL_0013: pop       
+IL_0014: ret       
+
+
+[method ShipC.get_Alive, id=0x1E56D3B63E0]
+Signature: 
+Returns: System.Boolean
+IL_0000: ldsfld    0x04000988
+IL_0005: ldarg.0   
+IL_0006: ldfld     0x0400065c
+IL_000b: call      0x06000f90
+IL_0010: ret       
+
+
+[method ShipC.get_HealthFraction, id=0x1E56D3B6340]
+Signature: 
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x0400065c
+IL_0006: ldarg.0   
+IL_0007: ldfld     0x0400065d
+IL_000c: call      0x06000f8d
+IL_0011: ret       
+
+Methods dumped for ShipC: 4
+
+--- class Unit ---
+
+[method Unit.CalculateDamageAmount, id=0x1E8C3236DA8]
+Signature: FixedPoint,Unit,bool
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040006ec
+IL_0006: brfalse.s IL_000e
+IL_0008: ldsfld    0x04000988
+IL_000d: ret       
+IL_000e: ldarg.1   
+IL_000f: ldsfld    0x04000988
+IL_0014: call      0x06000f92
+IL_0019: brfalse.s IL_0021
+IL_001b: ldsfld    0x04000988
+IL_0020: ret       
+IL_0021: ldarg.0   
+IL_0022: ldfld     0x040006c7
+IL_0027: callvirt  0x06000a29
+IL_002c: brfalse.s IL_0034
+IL_002e: ldsfld    0x04000988
+IL_0033: ret       
+IL_0034: ldarg.0   
+IL_0035: call      0x06000a59
+IL_003a: ldc.i4.0  
+IL_003b: callvirt  0x06000ad9
+IL_0040: brfalse.s IL_0048
+IL_0042: ldsfld    0x04000988
+IL_0047: ret       
+IL_0048: ldarg.0   
+IL_0049: call      0x06000a5b
+IL_004e: callvirt  0x060017df
+IL_0053: call      0x06000f84
+IL_0058: stloc.0   
+IL_0059: ldarg.0   
+IL_005a: call      0x06000a64
+IL_005f: brfalse.s IL_0084
+IL_0061: ldloc.0   
+IL_0062: ldarg.0   
+IL_0063: call      0x06000a64
+IL_0068: callvirt  0x0600146e
+IL_006d: ldc.i4.0  
+IL_006e: ldarg.0   
+IL_006f: call      0x06000a5b
+IL_0074: callvirt  0x0600043c
+IL_0079: call      0x06000f84
+IL_007e: call      0x06000f8a
+IL_0083: stloc.0   
+IL_0084: ldarg.0   
+IL_0085: call      0x06000a65
+IL_008a: brfalse.s IL_00af
+IL_008c: ldloc.0   
+IL_008d: ldarg.0   
+IL_008e: call      0x06000a65
+IL_0093: callvirt  0x060007ad
+IL_0098: ldc.i4.0  
+IL_0099: ldarg.0   
+IL_009a: call      0x06000a5b
+IL_009f: callvirt  0x0600043c
+IL_00a4: call      0x06000f84
+IL_00a9: call      0x06000f8a
+IL_00ae: stloc.0   
+IL_00af: ldarg.2   
+IL_00b0: callvirt  0x06000a5b
+IL_00b5: callvirt  0x060017aa
+IL_00ba: ldfld     0x04000782
+IL_00bf: callvirt  0x06000f62
+IL_00c4: brfalse.s IL_011c
+IL_00c6: ldarg.0   
+IL_00c7: call      0x06000a64
+IL_00cc: brfalse.s IL_00f1
+IL_00ce: ldloc.0   
+IL_00cf: ldarg.0   
+IL_00d0: call      0x06000a64
+IL_00d5: callvirt  0x0600146e
+IL_00da: ldc.i4.4  
+IL_00db: ldarg.0   
+IL_00dc: call      0x06000a5b
+IL_00e1: callvirt  0x0600043c
+IL_00e6: call      0x06000f84
+IL_00eb: call      0x06000f8a
+IL_00f0: stloc.0   
+IL_00f1: ldarg.0   
+IL_00f2: call      0x06000a65
+IL_00f7: brfalse.s IL_011c
+IL_00f9: ldloc.0   
+IL_00fa: ldarg.0   
+IL_00fb: call      0x06000a65
+IL_0100: callvirt  0x060007ad
+IL_0105: ldc.i4.4  
+IL_0106: ldarg.0   
+IL_0107: call      0x06000a5b
+IL_010c: callvirt  0x0600043c
+IL_0111: call      0x06000f84
+IL_0116: call      0x06000f8a
+IL_011b: stloc.0   
+IL_011c: ldloc.0   
+IL_011d: ldsfld    0x04000780
+IL_0122: call      0x06000f95
+IL_0127: stloc.0   
+IL_0128: ldarg.1   
+IL_0129: ldsfld    0x04000989
+IL_012e: ldloc.0   
+IL_012f: call      0x06000f8b
+IL_0134: call      0x06000f8c
+IL_0139: starg.s   1
+IL_013b: ldarg.0   
+IL_013c: ldfld     0x040006c7
+IL_0141: callvirt  0x06000a25
+IL_0146: brfalse.s IL_019f
+IL_0148: call      0x06000fc8
+IL_014d: callvirt  0x0600085d
+IL_0152: brfalse.s IL_019f
+IL_0154: call      0x06000fc8
+IL_0159: callvirt  0x0600085f
+IL_015e: brtrue.s  IL_0172
+IL_0160: ldsfld    0x04000989
+IL_0165: ldsfld    0x040006c4
+IL_016a: call      0x06000f8a
+IL_016f: stloc.1   
+IL_0170: br.s      IL_0196
+IL_0172: ldsfld    0x04000989
+IL_0177: call      0x06000fc8
+IL_017c: callvirt  0x0600085f
+IL_0181: call      0x06000f85
+IL_0186: ldsfld    0x040006c5
+IL_018b: call      0x06000f8c
+IL_0190: call      0x06000f8b
+IL_0195: stloc.1   
+IL_0196: ldarg.1   
+IL_0197: ldloc.1   
+IL_0198: call      0x06000f8c
+IL_019d: starg.s   1
+IL_019f: ldsfld    0x04000995
+IL_01a4: ldfld     0x04000852
+IL_01a9: ldarg.3   
+IL_01aa: and       
+IL_01ab: brfalse.s IL_01db
+IL_01ad: ldarg.0   
+IL_01ae: call      0x06000a79
+IL_01b3: brtrue.s  IL_01db
+IL_01b5: ldarg.1   
+IL_01b6: ldarg.2   
+IL_01b7: callvirt  0x06000a73
+IL_01bc: ldarg.0   
+IL_01bd: call      0x06000a73
+IL_01c2: call      0x0a000069
+IL_01c7: stloc.2   
+IL_01c8: ldloca.s  2
+IL_01ca: call      0x0a000114
+IL_01cf: call      0x06000f84
+IL_01d4: call      0x06000f8d
+IL_01d9: starg.s   1
+IL_01db: ldsfld    0x04000995
+IL_01e0: ldfld     0x04000853
+IL_01e5: brfalse.s IL_0200
+IL_01e7: ldarg.1   
+IL_01e8: ldarg.0   
+IL_01e9: call      0x06000a4b
+IL_01ee: ldarg.2   
+IL_01ef: ldfld     0x040006c7
+IL_01f4: callvirt  0x0600082c
+IL_01f9: call      0x06000f8c
+IL_01fe: starg.s   1
+IL_0200: ldarg.1   
+IL_0201: ret       
+
+
+[method Unit.DamageAllShips, id=0x1E8C3236DD0]
+Signature: FixedPoint
+Returns: System.Void
+IL_0000: newobj    0x06003a55
+IL_0005: stloc.0   
+IL_0006: ldloc.0   
+IL_0007: ldarg.0   
+IL_0008: stfld     0x04001f63
+IL_000d: ldloc.0   
+IL_000e: ldarg.1   
+IL_000f: stfld     0x04001f64
+IL_0014: ldarg.0   
+IL_0015: ldfld     0x040006e9
+IL_001a: callvirt  0x0a0000b1
+IL_001f: ldarg.0   
+IL_0020: ldfld     0x040006e9
+IL_0025: ldarg.0   
+IL_0026: call      0x06000a48
+IL_002b: call      0x2b000010
+IL_0030: pop       
+IL_0031: ldarg.0   
+IL_0032: ldfld     0x040006e9
+IL_0037: ldloc.0   
+IL_0038: ldftn     0x06003a56
+IL_003e: newobj    0x0a0005ce
+IL_0043: callvirt  0x0a0005cf
+IL_0048: ldarg.0   
+IL_0049: ldfld     0x040006e9
+IL_004e: callvirt  0x0a0000b1
+IL_0053: ret       
+
+
+[method Unit.DealDamageToTarget, id=0x1E8C323B320]
+Signature: Unit,bool
+Returns: System.Boolean
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040006ec
+IL_0006: brfalse.s IL_000a
+IL_0008: ldc.i4.1  
+IL_0009: ret       
+IL_000a: ldarg.0   
+IL_000b: call      0x06000a5b
+IL_0010: ldarg.2   
+IL_0011: callvirt  0x060017de
+IL_0016: ldarg.0   
+IL_0017: call      0x06000a5b
+IL_001c: callvirt  0x060017aa
+IL_0021: ldfld     0x0400078a
+IL_0026: ldarg.0   
+IL_0027: ldfld     0x040006cf
+IL_002c: callvirt  0x06003eb5
+IL_0031: mul       
+IL_0032: call      0x06000f84
+IL_0037: call      0x06000f8c
+IL_003c: stloc.0   
+IL_003d: ldarg.0   
+IL_003e: call      0x06000a64
+IL_0043: brfalse.s IL_0099
+IL_0045: ldloc.0   
+IL_0046: ldsfld    0x04000989
+IL_004b: ldarg.0   
+IL_004c: call      0x06000a64
+IL_0051: callvirt  0x0600146e
+IL_0056: ldc.i4.1  
+IL_0057: ldarg.0   
+IL_0058: call      0x06000a5b
+IL_005d: callvirt  0x0600043c
+IL_0062: call      0x06000f84
+IL_0067: call      0x06000f8a
+IL_006c: ldarg.0   
+IL_006d: call      0x06000a64
+IL_0072: callvirt  0x06001470
+IL_0077: ldc.i4.1  
+IL_0078: ldarg.0   
+IL_0079: call      0x06000a5b
+IL_007e: ldarg.1   
+IL_007f: callvirt  0x06000a5b
+IL_0084: callvirt  0x06000440
+IL_0089: call      0x06000f84
+IL_008e: call      0x06000f8a
+IL_0093: call      0x06000f8c
+IL_0098: stloc.0   
+IL_0099: ldarg.0   
+IL_009a: call      0x06000a65
+IL_009f: brfalse.s IL_00cf
+IL_00a1: ldloc.0   
+IL_00a2: ldsfld    0x04000989
+IL_00a7: ldarg.0   
+IL_00a8: call      0x06000a65
+IL_00ad: callvirt  0x060007ad
+IL_00b2: ldc.i4.s  9
+IL_00b4: ldarg.0   
+IL_00b5: call      0x06000a5b
+IL_00ba: callvirt  0x0600043c
+IL_00bf: call      0x06000f84
+IL_00c4: call      0x06000f8a
+IL_00c9: call      0x06000f8c
+IL_00ce: stloc.0   
+IL_00cf: ldarg.0   
+IL_00d0: call      0x06000a48
+IL_00d5: ldc.i4.0  
+IL_00d6: callvirt  0x0a000597
+IL_00db: ldc.i4.0  
+IL_00dc: callvirt  0x060009a4
+IL_00e1: brfalse.s IL_0102
+IL_00e3: ldarg.0   
+IL_00e4: call      0x06000a48
+IL_00e9: call      0x2b000013
+IL_00ee: ldc.i4.0  
+IL_00ef: callvirt  0x060009a5
+IL_00f4: ldarg.0   
+IL_00f5: ldfld     0x040006c8
+IL_00fa: ldarg.1   
+IL_00fb: ldloc.0   
+IL_00fc: callvirt  0x06000c7b
+IL_0101: ret       
+IL_0102: ldarg.0   
+IL_0103: call      0x06000a48
+IL_0108: ldc.i4.0  
+IL_0109: callvirt  0x0a000597
+IL_010e: ldc.i4.2  
+IL_010f: callvirt  0x060009a4
+IL_0114: brfalse.s IL_0135
+IL_0116: ldarg.0   
+IL_0117: call      0x06000a48
+IL_011c: call      0x2b000013
+IL_0121: ldc.i4.2  
+IL_0122: callvirt  0x060009a5
+IL_0127: ldarg.0   
+IL_0128: ldfld     0x040006c8
+IL_012d: ldarg.1   
+IL_012e: ldloc.0   
+IL_012f: callvirt  0x06000c7b
+IL_0134: ret       
+IL_0135: ldarg.0   
+IL_0136: ldarg.1   
+IL_0137: ldloc.0   
+IL_0138: call      0x06000ab3
+IL_013d: ret       
+
+
+[method Unit.TakeDamage, id=0x1E8C3236E20]
+Signature: FixedPoint,ShipC,bool
+Returns: System.Boolean
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040006eb
+IL_0006: brfalse.s IL_000a
+IL_0008: ldc.i4.0  
+IL_0009: ret       
+IL_000a: ldarg.1   
+IL_000b: ldsfld    0x04000988
+IL_0010: call      0x06000f90
+IL_0015: brfalse.s IL_0019
+IL_0017: ldc.i4.0  
+IL_0018: ret       
+IL_0019: ldarg.2   
+IL_001a: ldarg.1   
+IL_001b: callvirt  0x060009a2
+IL_0020: starg.s   1
+IL_0022: ldarg.0   
+IL_0023: call      0x06000a5b
+IL_0028: ldarg.0   
+IL_0029: call      0x06000a5d
+IL_002e: ldarg.1   
+IL_002f: callvirt  0x060017ea
+IL_0034: ldarg.0   
+IL_0035: call      0x06000a65
+IL_003a: brfalse.s IL_0071
+IL_003c: ldarg.1   
+IL_003d: ldarg.0   
+IL_003e: call      0x06000a65
+IL_0043: callvirt  0x060007ad
+IL_0048: ldc.i4.6  
+IL_0049: ldarg.0   
+IL_004a: call      0x06000a5b
+IL_004f: callvirt  0x0600043c
+IL_0054: call      0x06000f84
+IL_0059: call      0x06000f8c
+IL_005e: stloc.0   
+IL_005f: ldarg.0   
+IL_0060: call      0x06000a5b
+IL_0065: ldarg.0   
+IL_0066: call      0x06000a5d
+IL_006b: ldloc.0   
+IL_006c: callvirt  0x060017ed
+IL_0071: ldarg.2   
+IL_0072: callvirt  0x0600098a
+IL_0077: brfalse.s IL_007b
+IL_0079: ldc.i4.0  
+IL_007a: ret       
+IL_007b: ldarg.0   
+IL_007c: ldarg.2   
+IL_007d: call      0x06000a90
+IL_0082: ldarg.0   
+IL_0083: call      0x06000a53
+IL_0088: brfalse.s IL_008c
+IL_008a: ldc.i4.0  
+IL_008b: ret       
+IL_008c: ldc.i4.0  
+IL_008d: ldarg.0   
+IL_008e: call      0x06000a48
+IL_0093: callvirt  0x0a0000af
+IL_0098: bge.s     IL_00e6
+IL_009a: ldc.i4.4  
+IL_009b: newarr    0x01000018
+IL_00a0: dup       
+IL_00a1: ldc.i4.0  
+IL_00a2: ldarg.0   
+IL_00a3: call      0x06000a5b
+IL_00a8: callvirt  0x060017aa
+IL_00ad: callvirt  0x060032f5
+IL_00b2: stelem.ref
+IL_00b3: dup       
+IL_00b4: ldc.i4.1  
+IL_00b5: ldstr     " reached 0 health but still has "
+IL_00ba: stelem.ref
+IL_00bb: dup       
+IL_00bc: ldc.i4.2  
+IL_00bd: ldarg.0   
+IL_00be: call      0x06000a48
+IL_00c3: callvirt  0x0a0000af
+IL_00c8: box       0x01000127
+IL_00cd: stelem.ref
+IL_00ce: dup       
+IL_00cf: ldc.i4.3  
+IL_00d0: ldstr     " ships!"
+IL_00d5: stelem.ref
+IL_00d6: call      0x0a0000f6
+IL_00db: call      0x0a0001ff
+IL_00e0: ldarg.0   
+IL_00e1: call      0x06000a8f
+IL_00e6: ldsfld    0x04000cbe
+IL_00eb: dup       
+IL_00ec: brtrue.s  IL_00f1
+IL_00ee: pop       
+IL_00ef: br.s      IL_0107
+IL_00f1: ldarg.2   
+IL_00f2: callvirt  0x06000982
+IL_00f7: callvirt  0x06000a5b
+IL_00fc: ldarg.0   
+IL_00fd: call      0x06000a5d
+IL_0102: callvirt  0x0a0005d1
+IL_0107: ldarg.0   
+IL_0108: call      0x06000a61
+IL_010d: brtrue.s  IL_0116
+IL_010f: ldarg.0   
+IL_0110: ldc.i4.1  
+IL_0111: call      0x06000a97
+IL_0116: ldarg.0   
+IL_0117: ldfld     0x040006de
+IL_011c: brfalse.s IL_0129
+IL_011e: ldarg.0   
+IL_011f: ldfld     0x040006de
+IL_0124: callvirt  0x06000a96
+IL_0129: ldc.i4.1  
+IL_012a: ret       
+
+
+[method Unit.get_Health, id=0x1E8C3236448]
+Signature: 
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040006cf
+IL_0006: callvirt  0x06003eaa
+IL_000b: ret       
+
+
+[method Unit.get_HealthFraction, id=0x1E8C32364C0]
+Signature: 
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040006cf
+IL_0006: callvirt  0x06003eb4
+IL_000b: ret       
+
+Methods dumped for Unit: 6
+
+--- class Player ---
+
+[method Player.CalculateCombatHealth, id=0x1E8C3235BA0]
+Signature: 
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: call      0x06000a11
+IL_0006: ldsfld    0x04000988
+IL_000b: ldnull    
+IL_000c: ldftn     0x06000a3b
+IL_0012: newobj    0x0a0005c6
+IL_0017: call      0x2b0000fb
+IL_001c: ret       
+
+
+[method Player.CalculateTotalCombatHealth, id=0x1E8C3235B78]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.0   
+IL_0002: call      0x06000a3a
+IL_0007: call      0x06000a1e
+IL_000c: ret       
+
+
+[method Player.HealthAdder, id=0x1E8C3235BC8]
+Signature: Unit,FixedPoint
+Returns: FixedPoint
+IL_0000: ldarg.0   
+IL_0001: callvirt  0x06000a79
+IL_0006: brtrue.s  IL_0025
+IL_0008: ldarg.0   
+IL_0009: callvirt  0x06000a83
+IL_000e: brfalse.s IL_0025
+IL_0010: ldarg.0   
+IL_0011: ldfld     0x040006ca
+IL_0016: brfalse.s IL_0027
+IL_0018: ldarg.0   
+IL_0019: ldfld     0x040006ca
+IL_001e: callvirt  0x060007b9
+IL_0023: brfalse.s IL_0027
+IL_0025: ldarg.1   
+IL_0026: ret       
+IL_0027: ldarg.1   
+IL_0028: ldarg.0   
+IL_0029: callvirt  0x06000a54
+IL_002e: call      0x06000f8a
+IL_0033: ret       
+
+Methods dumped for Player: 3
+
+--- class StarFleet ---
+
+[method StarFleet.CancelRepair, id=0x1E8C31C7290]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldc.i4.0  
+IL_0002: call      0x060014c2
+IL_0007: ret       
+
+
+[method StarFleet.RepairByAmount, id=0x1E8C31C6E58]
+Signature: single
+Returns: System.Void
+IL_0000: newobj    0x06003dbe
+IL_0005: stloc.0   
+IL_0006: ldloc.0   
+IL_0007: ldarg.1   
+IL_0008: stfld     0x040022c6
+IL_000d: ldarg.0   
+IL_000e: call      0x0600145d
+IL_0013: ldloc.0   
+IL_0014: ldfld     0x040022c6
+IL_0019: callvirt  0x060017ec
+IL_001e: ldarg.0   
+IL_001f: call      0x06001461
+IL_0024: ldloc.0   
+IL_0025: ldftn     0x06003dbf
+IL_002b: newobj    0x0a0004bc
+IL_0030: callvirt  0x0a0004bb
+IL_0035: ret       
+
+
+[method StarFleet.RepairCost, id=0x1E8BF686C30]
+Signature: IResourceAmounts
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x06001412
+IL_0006: callvirt  0x0600134b
+IL_000b: ldarg.1   
+IL_000c: ldarg.0   
+IL_000d: callvirt  0x06001559
+IL_0012: ldarg.1   
+IL_0013: ldarg.0   
+IL_0014: call      0x0600149a
+IL_0019: callvirt  0x060013e0
+IL_001e: pop       
+IL_001f: ldarg.0   
+IL_0020: call      0x0600145d
+IL_0025: brtrue.s  IL_0028
+IL_0027: ret       
+IL_0028: ldsfld    0x0400099e
+IL_002d: callvirt  0x0a00037c
+IL_0032: stloc.0   
+IL_0033: ldloc.0   
+IL_0034: ldsfld    0x04000995
+IL_0039: callvirt  0x06000dea
+IL_003e: callvirt  0x06003319
+IL_0043: callvirt  0x0600169e
+IL_0048: pop       
+IL_0049: ldarg.1   
+IL_004a: ldloc.0   
+IL_004b: ldarg.0   
+IL_004c: call      0x0600145d
+IL_0051: callvirt  0x060017cb
+IL_0056: conv.r4   
+IL_0057: callvirt  0x0600169a
+IL_005c: callvirt  0x060013db
+IL_0061: pop       
+IL_0062: ldsfld    0x0400099e
+IL_0067: ldloc.0   
+IL_0068: callvirt  0x0a00037d
+IL_006d: ret       
+
+
+[method StarFleet.RepairTime, id=0x1E8BF686BE0]
+Signature: int,int
+Returns: System.Int32
+IL_0000: ldarg.0   
+IL_0001: call      0x0600148f
+IL_0006: call      0x0a0000a6
+IL_000b: stloc.0   
+IL_000c: ldarg.0   
+IL_000d: call      0x060014ca
+IL_0012: ldc.r4    1
+IL_0017: ldloc.0   
+IL_0018: sub       
+IL_0019: ldarg.0   
+IL_001a: call      0x06001461
+IL_001f: callvirt  0x0a00041b
+IL_0024: conv.r4   
+IL_0025: mul       
+IL_0026: call      0x0a0002cc
+IL_002b: call      0x0a0000b0
+IL_0030: stloc.1   
+IL_0031: ldloc.1   
+IL_0032: ldc.i4.0  
+IL_0033: bgt.s     IL_0037
+IL_0035: ldarg.1   
+IL_0036: ret       
+IL_0037: ldarg.2   
+IL_0038: conv.r4   
+IL_0039: ldarg.0   
+IL_003a: call      0x06001416
+IL_003f: callvirt  0x06001700
+IL_0044: callvirt  0x0600048f
+IL_0049: mul       
+IL_004a: call      0x0a000598
+IL_004f: stloc.2   
+IL_0050: ldloc.1   
+IL_0051: conv.r4   
+IL_0052: ldc.r4    0.667
+IL_0057: ldarg.0   
+IL_0058: call      0x06001416
+IL_005d: callvirt  0x060016d1
+IL_0062: ldfld     0x04000a7e
+IL_0067: conv.r4   
+IL_0068: call      0x0a000065
+IL_006d: mul       
+IL_006e: ldloc.2   
+IL_006f: conv.r4   
+IL_0070: div       
+IL_0071: call      0x0a000598
+IL_0076: stloc.3   
+IL_0077: ldarg.1   
+IL_0078: ldloc.3   
+IL_0079: add       
+IL_007a: ldarg.2   
+IL_007b: call      0x0a0002cd
+IL_0080: ret       
+
+
+[method StarFleet.SelfRepair, id=0x1E8C31C6E30]
+Signature: 
+Returns: System.Void
+IL_0000: ldc.i4.0  
+IL_0001: ldarg.0   
+IL_0002: call      0x06001416
+IL_0007: ldfld     0x04000c9e
+IL_000c: bge.s     IL_000f
+IL_000e: ret       
+IL_000f: ldarg.0   
+IL_0010: call      0x0600145d
+IL_0015: ldc.i4.1  
+IL_0016: ldc.i4.1  
+IL_0017: callvirt  0x060017f4
+IL_001c: ldc.r4    0.34
+IL_0021: ldc.i4.1  
+IL_0022: ldarg.0   
+IL_0023: call      0x06001416
+IL_0028: callvirt  0x060016d1
+IL_002d: ldfld     0x04000a7e
+IL_0032: add       
+IL_0033: conv.r4   
+IL_0034: mul       
+IL_0035: stloc.0   
+IL_0036: ldarg.0   
+IL_0037: ldloc.0   
+IL_0038: call      0x06001499
+IL_003d: ret       
+
+
+[method StarFleet.SetMinimumHealth, id=0x1E8C31C6D18]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x0600145d
+IL_0006: brfalse.s IL_0013
+IL_0008: ldarg.0   
+IL_0009: call      0x0600145d
+IL_000e: callvirt  0x060017d4
+IL_0013: ldarg.0   
+IL_0014: call      0x06001461
+IL_0019: ldsfld    0x040022b8
+IL_001e: dup       
+IL_001f: brtrue.s  IL_0038
+IL_0021: pop       
+IL_0022: ldsfld    0x040022b1
+IL_0027: ldftn     0x06003db0
+IL_002d: newobj    0x0a0004bc
+IL_0032: dup       
+IL_0033: stsfld    0x040022b8
+IL_0038: callvirt  0x0a0004bb
+IL_003d: ldarg.0   
+IL_003e: call      0x06001427
+IL_0043: dup       
+IL_0044: brtrue.s  IL_0048
+IL_0046: pop       
+IL_0047: ret       
+IL_0048: ldarg.0   
+IL_0049: callvirt  0x0a000222
+IL_004e: ret       
+
+
+[method StarFleet.SetRepairTurns, id=0x1E8BF33B068]
+Signature: int
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.1   
+IL_0002: call      0x06001477
+IL_0007: ldarg.0   
+IL_0008: call      0x06001478
+IL_000d: brtrue.s  IL_0012
+IL_000f: ldarg.1   
+IL_0010: brtrue.s  IL_001a
+IL_0012: ldarg.0   
+IL_0013: call      0x060014c3
+IL_0018: br.s      IL_0020
+IL_001a: ldarg.0   
+IL_001b: call      0x060014c5
+IL_0020: ldarg.0   
+IL_0021: call      0x06001416
+IL_0026: ldc.i4.4  
+IL_0027: callvirt  0x06001766
+IL_002c: ret       
+
+
+[method StarFleet.SetRepairing, id=0x1E8BF33AFC8]
+Signature: bool
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.1   
+IL_0002: call      0x06001479
+IL_0007: ldarg.0   
+IL_0008: call      0x060014c6
+IL_000d: ret       
+
+
+[method StarFleet.TakeAutoResolveDamage, id=0x1E8C31C7268]
+Signature: single,bool
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x06001464
+IL_0006: newobj    0x0a000a72
+IL_000b: stloc.0   
+IL_000c: ldsfld    0x04000988
+IL_0011: stloc.1   
+IL_0012: ldsfld    0x04000988
+IL_0017: stloc.2   
+IL_0018: ldc.i4.0  
+IL_0019: ldloc.0   
+IL_001a: callvirt  0x0a00041b
+IL_001f: clt       
+IL_0021: stloc.3   
+IL_0022: ldloc.0   
+IL_0023: callvirt  0x0a000a74
+IL_0028: stloc.s   9
+IL_002a: br.s      IL_0043
+IL_002c: ldloca.s  9
+IL_002e: call      0x0a000a75
+IL_0033: stloc.s   10
+IL_0035: ldloc.1   
+IL_0036: ldloc.s   10
+IL_0038: callvirt  0x060017ae
+IL_003d: call      0x06000f8a
+IL_0042: stloc.1   
+IL_0043: ldloca.s  9
+IL_0045: call      0x0a000a76
+IL_004a: brtrue.s  IL_002c
+IL_004c: leave.s   IL_005c
+IL_004e: ldloca.s  9
+IL_0050: constrained.0x1b0004b7
+IL_0056: callvirt  0x0a000008
+IL_005b: endfinally
+IL_005c: ldarg.1   
+IL_005d: ldc.r4    2
+IL_0062: div       
+IL_0063: stloc.s   4
+IL_0065: ldc.r4    0
+IL_006a: stloc.s   5
+IL_006c: ldc.i4.8  
+IL_006d: stloc.s   11
+IL_006f: br.s      IL_00d7
+IL_0071: ldc.i4.0  
+IL_0072: stloc.3   
+IL_0073: ldloc.0   
+IL_0074: callvirt  0x0a000a74
+IL_0079: stloc.s   9
+IL_007b: br.s      IL_009d
+IL_007d: ldloca.s  9
+IL_007f: call      0x0a000a75
+IL_0084: stloc.s   12
+IL_0086: ldloc.s   12
+IL_0088: ldloc.s   4
+IL_008a: ldloc.s   4
+IL_008c: ldloca.s  2
+IL_008e: callvirt  0x060017e9
+IL_0093: ldloc.3   
+IL_0094: ldloc.s   12
+IL_0096: callvirt  0x060017ba
+IL_009b: or        
+IL_009c: stloc.3   
+IL_009d: ldloca.s  9
+IL_009f: call      0x0a000a76
+IL_00a4: brtrue.s  IL_007d
+IL_00a6: leave.s   IL_00b6
+IL_00a8: ldloca.s  9
+IL_00aa: constrained.0x1b0004b7
+IL_00b0: callvirt  0x0a000008
+IL_00b5: endfinally
+IL_00b6: ldloca.s  2
+IL_00b8: call      0x06000f87
+IL_00bd: ldloca.s  1
+IL_00bf: call      0x06000f87
+IL_00c4: div       
+IL_00c5: stloc.s   5
+IL_00c7: ldloc.s   4
+IL_00c9: ldc.r4    2
+IL_00ce: div       
+IL_00cf: stloc.s   4
+IL_00d1: ldloc.s   11
+IL_00d3: ldc.i4.1  
+IL_00d4: sub       
+IL_00d5: stloc.s   11
+IL_00d7: ldloc.3   
+IL_00d8: brfalse.s IL_00e4
+IL_00da: ldloc.s   5
+IL_00dc: ldarg.1   
+IL_00dd: bge.un.s  IL_00e4
+IL_00df: ldc.i4.0  
+IL_00e0: ldloc.s   11
+IL_00e2: ble.s     IL_0071
+IL_00e4: ldarg.0   
+IL_00e5: call      0x0600145d
+IL_00ea: callvirt  0x060017aa
+IL_00ef: ldfld     0x04000786
+IL_00f4: call      0x06000f85
+IL_00f9: stloc.s   6
+IL_00fb: ldc.r4    0.5
+IL_0100: ldarg.1   
+IL_0101: ldloc.s   6
+IL_0103: call      0x060017eb
+IL_0108: stloc.s   7
+IL_010a: ldarg.0   
+IL_010b: call      0x0600145d
+IL_0110: callvirt  0x060017af
+IL_0115: stloc.s   8
+IL_0117: ldloc.s   8
+IL_0119: ldsfld    0x04000988
+IL_011e: call      0x06000f8e
+IL_0123: brfalse.s IL_0126
+IL_0125: ret       
+IL_0126: ldarg.2   
+IL_0127: brfalse.s IL_015d
+IL_0129: ldloc.s   6
+IL_012b: ldsfld    0x04000bbb
+IL_0130: call      0x06000f8c
+IL_0135: stloc.s   13
+IL_0137: ldloc.s   13
+IL_0139: ldloc.s   7
+IL_013b: call      0x06000f92
+IL_0140: brfalse.s IL_0156
+IL_0142: ldloc.s   7
+IL_0144: ldloc.s   8
+IL_0146: ldloc.s   13
+IL_0148: call      0x06000f8b
+IL_014d: call      0x06000f95
+IL_0152: stloc.s   7
+IL_0154: br.s      IL_015d
+IL_0156: ldsfld    0x04000988
+IL_015b: stloc.s   7
+IL_015d: ldc.i4.1  
+IL_015e: ldarg.0   
+IL_015f: call      0x060014c9
+IL_0164: bge.s     IL_01b8
+IL_0166: ldc.i4.0  
+IL_0167: stloc.s   14
+IL_0169: ldc.r4    0.5
+IL_016e: call      0x06000f84
+IL_0173: stloc.s   15
+IL_0175: br.s      IL_0192
+IL_0177: ldloc.s   14
+IL_0179: ldc.i4.1  
+IL_017a: add       
+IL_017b: stloc.s   14
+IL_017d: ldsfld    0x04000988
+IL_0182: ldloc.s   7
+IL_0184: ldloc.s   15
+IL_0186: call      0x06000f8c
+IL_018b: call      0x06000f96
+IL_0190: stloc.s   7
+IL_0192: ldloc.s   8
+IL_0194: ldloc.s   7
+IL_0196: call      0x06000f92
+IL_019b: brfalse.s IL_01a3
+IL_019d: ldloc.s   14
+IL_019f: ldc.i4.s  10
+IL_01a1: blt.s     IL_0177
+IL_01a3: ldloc.s   7
+IL_01a5: ldsfld    0x04000989
+IL_01aa: call      0x06000f92
+IL_01af: brfalse.s IL_01b8
+IL_01b1: ldsfld    0x04000988
+IL_01b6: stloc.s   7
+IL_01b8: ldarg.0   
+IL_01b9: call      0x0600145d
+IL_01be: ldc.i4.0  
+IL_01bf: ldloc.s   7
+IL_01c1: callvirt  0x060017ea
+IL_01c6: ldarg.0   
+IL_01c7: call      0x06001427
+IL_01cc: dup       
+IL_01cd: brtrue.s  IL_01d1
+IL_01cf: pop       
+IL_01d0: ret       
+IL_01d1: ldarg.0   
+IL_01d2: callvirt  0x0a000222
+IL_01d7: ret       
+
+
+[method StarFleet.TakeHazardSystemDamage, id=0x1E8BF4A76C0]
+Signature: single
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x06001452
+IL_0006: brfalse.s IL_0009
+IL_0008: ret       
+IL_0009: ldarg.0   
+IL_000a: call      0x06001478
+IL_000f: brfalse.s IL_0012
+IL_0011: ret       
+IL_0012: ldsfld    0x04000995
+IL_0017: callvirt  0x06000dbd
+IL_001c: ldstr     "HAZARD_SHIELDING"
+IL_0021: callvirt  0x0a000a71
+IL_0026: isinst    0x020003b8
+IL_002b: stloc.0   
+IL_002c: ldarg.0   
+IL_002d: ldloc.0   
+IL_002e: call      0x060014b3
+IL_0033: brfalse.s IL_003f
+IL_0035: ldarg.1   
+IL_0036: ldloc.0   
+IL_0037: callvirt  0x06002663
+IL_003c: mul       
+IL_003d: starg.s   1
+IL_003f: ldc.r4    0
+IL_0044: ldarg.1   
+IL_0045: bge.un.s  IL_004f
+IL_0047: ldarg.0   
+IL_0048: ldarg.1   
+IL_0049: ldc.i4.0  
+IL_004a: call      0x060014bf
+IL_004f: ret       
+
+
+[method StarFleet.TickRepair, id=0x1E8C31C6DE0]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x0600145d
+IL_0006: ldc.i4.0  
+IL_0007: ldc.i4.1  
+IL_0008: callvirt  0x060017f4
+IL_000d: ldarg.0   
+IL_000e: call      0x06001452
+IL_0013: brtrue.s  IL_0022
+IL_0015: ldarg.0   
+IL_0016: call      0x06001412
+IL_001b: callvirt  0x06001347
+IL_0020: brfalse.s IL_0029
+IL_0022: ldarg.0   
+IL_0023: call      0x06001498
+IL_0028: ret       
+IL_0029: ldarg.0   
+IL_002a: call      0x06001475
+IL_002f: brtrue.s  IL_0050
+IL_0031: ldarg.0   
+IL_0032: call      0x06001421
+IL_0037: brtrue.s  IL_004f
+IL_0039: ldarg.0   
+IL_003a: ldstr     "AUTOMATED_REPAIR"
+IL_003f: call      0x06001497
+IL_0044: ldarg.0   
+IL_0045: ldstr     "AUTOMATED_REPAIR_2"
+IL_004a: call      0x06001497
+IL_004f: ret       
+IL_0050: ldarg.0   
+IL_0051: ldarg.0   
+IL_0052: call      0x06001476
+IL_0057: ldc.i4.1  
+IL_0058: sub       
+IL_0059: call      0x06001477
+IL_005e: ldarg.0   
+IL_005f: call      0x06001475
+IL_0064: brfalse.s IL_006e
+IL_0066: ldarg.0   
+IL_0067: ldc.i4.1  
+IL_0068: call      0x06001479
+IL_006d: ret       
+IL_006e: ldarg.0   
+IL_006f: call      0x0600145d
+IL_0074: ldc.i4.1  
+IL_0075: ldc.i4    2147483647
+IL_007a: callvirt  0x060017f4
+IL_007f: ldarg.0   
+IL_0080: call      0x06001461
+IL_0085: ldsfld    0x040022ba
+IL_008a: dup       
+IL_008b: brtrue.s  IL_00a4
+IL_008d: pop       
+IL_008e: ldsfld    0x040022b1
+IL_0093: ldftn     0x06003db2
+IL_0099: newobj    0x0a0004bc
+IL_009e: dup       
+IL_009f: stsfld    0x040022ba
+IL_00a4: callvirt  0x0a0004bb
+IL_00a9: ldarg.0   
+IL_00aa: call      0x0600145d
+IL_00af: ldc.r4    1
+IL_00b4: callvirt  0x060017ec
+IL_00b9: ldarg.0   
+IL_00ba: call      0x06001461
+IL_00bf: ldsfld    0x040022bb
+IL_00c4: dup       
+IL_00c5: brtrue.s  IL_00de
+IL_00c7: pop       
+IL_00c8: ldsfld    0x040022b1
+IL_00cd: ldftn     0x06003db3
+IL_00d3: newobj    0x0a0004bc
+IL_00d8: dup       
+IL_00d9: stsfld    0x040022bb
+IL_00de: callvirt  0x0a0004bb
+IL_00e3: ldarg.0   
+IL_00e4: ldc.i4.0  
+IL_00e5: call      0x06001479
+IL_00ea: ret       
+
+
+[method StarFleet.get_HasPaidRepairCost, id=0x1E8BF4A7190]
+Signature: 
+Returns: System.Boolean
+IL_0000: ldarg.0   
+IL_0001: call      0x0600147a
+IL_0006: callvirt  0x060013c7
+IL_000b: ret       
+
+
+[method StarFleet.get_HasRepairTurnsLeft, id=0x1E8AD829940]
+Signature: 
+Returns: System.Boolean
+IL_0000: ldc.i4.0  
+IL_0001: ldarg.0   
+IL_0002: call      0x06001476
+IL_0007: clt       
+IL_0009: ret       
+
+Methods dumped for StarFleet: 13
+
+--- class StarUnit ---
+
+[method StarUnit.ConstructionTick, id=0x1E8C31C3920]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x060017bd
+IL_0006: ldc.i4.0  
+IL_0007: bgt.s     IL_000a
+IL_0009: ret       
+IL_000a: ldarg.0   
+IL_000b: call      0x060017bd
+IL_0010: stloc.0   
+IL_0011: ldarg.0   
+IL_0012: ldloc.0   
+IL_0013: ldc.i4.1  
+IL_0014: sub       
+IL_0015: call      0x060017be
+IL_001a: ldc.i4.0  
+IL_001b: ldarg.0   
+IL_001c: call      0x060017bd
+IL_0021: bge.s     IL_0024
+IL_0023: ret       
+IL_0024: ldarg.0   
+IL_0025: call      0x060017a6
+IL_002a: callvirt  0x06001412
+IL_002f: callvirt  0x0600134b
+IL_0034: ldarg.0   
+IL_0035: callvirt  0x06001548
+IL_003a: ldarg.0   
+IL_003b: call      0x060017c3
+IL_0040: callvirt  0x0a000b41
+IL_0045: ldarg.0   
+IL_0046: call      0x060017bb
+IL_004b: brtrue.s  IL_004e
+IL_004d: ret       
+IL_004e: ldarg.0   
+IL_004f: call      0x060017a6
+IL_0054: ldarg.0   
+IL_0055: isinst    0x02000171
+IL_005a: callvirt  0x060014c0
+IL_005f: ret       
+
+
+[method StarUnit.RepairUnit, id=0x1E8C31C3A10]
+Signature: single
+Returns: System.Void
+IL_0000: newobj    0x06003ede
+IL_0005: stloc.0   
+IL_0006: ldloc.0   
+IL_0007: ldarg.1   
+IL_0008: stfld     0x040023ca
+IL_000d: ldarg.0   
+IL_000e: call      0x060017c1
+IL_0013: brfalse.s IL_0016
+IL_0015: ret       
+IL_0016: ldarg.0   
+IL_0017: call      0x060017ac
+IL_001c: ldloc.0   
+IL_001d: ldftn     0x06003edf
+IL_0023: newobj    0x0a000772
+IL_0028: callvirt  0x0a000773
+IL_002d: ret       
+
+
+[method StarUnit.SetHealthFraction, id=0x1E8C31C3830]
+Signature: FixedPoint
+Returns: System.Void
+IL_0000: newobj    0x06003ed5
+IL_0005: stloc.0   
+IL_0006: ldloc.0   
+IL_0007: ldarg.1   
+IL_0008: stfld     0x040023c5
+IL_000d: ldarg.0   
+IL_000e: call      0x060017ac
+IL_0013: ldloc.0   
+IL_0014: ldftn     0x06003ed6
+IL_001a: newobj    0x0a000772
+IL_001f: callvirt  0x0a000773
+IL_0024: ret       
+
+
+[method StarUnit.StartConstruction, id=0x1E8C31C38D0]
+Signature: IResourceAmounts
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.0   
+IL_0002: call      0x060017aa
+IL_0007: ldfld     0x04000784
+IL_000c: ldarg.1   
+IL_000d: call      0x060017d9
+IL_0012: ret       
+
+
+[method StarUnit.StartConstruction, id=0x1E8BF349798]
+Signature: int,System.Collections.Generic.List`1<ResourceAmount>
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.1   
+IL_0002: call      0x060017be
+IL_0007: ldarg.0   
+IL_0008: ldarg.2   
+IL_0009: brfalse.s IL_0013
+IL_000b: ldarg.2   
+IL_000c: newobj    0x0a00096d
+IL_0011: br.s      IL_0018
+IL_0013: newobj    0x0a000b3b
+IL_0018: call      0x060017c4
+IL_001d: ldc.i4.0  
+IL_001e: ldarg.1   
+IL_001f: bge.s     IL_0037
+IL_0021: ldarg.0   
+IL_0022: call      0x060017a6
+IL_0027: callvirt  0x06001416
+IL_002c: callvirt  0x060016f0
+IL_0031: ldarg.0   
+IL_0032: callvirt  0x06000757
+IL_0037: ret       
+
+
+[method StarUnit.StartConstruction, id=0x1E8C31C38F8]
+Signature: int,IResourceAmounts
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.1   
+IL_0002: call      0x060017be
+IL_0007: ldarg.0   
+IL_0008: ldarg.2   
+IL_0009: callvirt  0x060013c8
+IL_000e: call      0x060017c4
+IL_0013: ldc.i4.0  
+IL_0014: ldarg.1   
+IL_0015: bge.s     IL_002d
+IL_0017: ldarg.0   
+IL_0018: call      0x060017a6
+IL_001d: callvirt  0x06001416
+IL_0022: callvirt  0x060016f0
+IL_0027: ldarg.0   
+IL_0028: callvirt  0x06000757
+IL_002d: ret       
+
+
+[method StarUnit.get_ConstructionProgressFraction, id=0x1E8C31C3740]
+Signature: 
+Returns: System.Single
+IL_0000: ldc.r4    1
+IL_0005: ldarg.0   
+IL_0006: call      0x060017bd
+IL_000b: conv.r4   
+IL_000c: ldarg.0   
+IL_000d: ldfld     0x04000cba
+IL_0012: conv.r4   
+IL_0013: div       
+IL_0014: sub       
+IL_0015: ret       
+
+
+[method StarUnit.get_UnderConstruction, id=0x1E8BF33A958]
+Signature: 
+Returns: System.Boolean
+IL_0000: ldarg.0   
+IL_0001: call      0x060017bd
+IL_0006: ldc.i4.0  
+IL_0007: cgt       
+IL_0009: ret       
+
+Methods dumped for StarUnit: 8
+
+--- class UnitConstruction ---
+
+[method UnitConstruction.RefreshAll, id=0x1E8BF686260]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040004d8
+IL_0006: ldarg.0   
+IL_0007: ldftn     0x06000759
+IL_000d: newobj    0x0a0004bc
+IL_0012: callvirt  0x0a0004bb
+IL_0017: ret       
+
+
+[method UnitConstruction.RefreshDisplay, id=0x1E8BF4D2938]
+Signature: StarUnit
+Returns: System.Void
+IL_0000: ldarg.1   
+IL_0001: callvirt  0x060017a6
+IL_0006: callvirt  0x06001412
+IL_000b: callvirt  0x06001348
+IL_0010: brtrue.s  IL_0013
+IL_0012: ret       
+IL_0013: ldarg.1   
+IL_0014: callvirt  0x060017a6
+IL_0019: callvirt  0x06001412
+IL_001e: callvirt  0x0600134b
+IL_0023: ldarg.1   
+IL_0024: callvirt  0x060017a6
+IL_0029: callvirt  0x06001416
+IL_002e: callvirt  0x0600154d
+IL_0033: ret       
+
+
+[method UnitConstruction.Remove, id=0x1E8C3233290]
+Signature: StarUnit
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldfld     0x040004d8
+IL_0006: ldarg.1   
+IL_0007: callvirt  0x0a0004be
+IL_000c: pop       
+IL_000d: ldarg.0   
+IL_000e: ldarg.1   
+IL_000f: call      0x06000759
+IL_0014: ret       
+
+Methods dumped for UnitConstruction: 3
+
+--- class PlayerConstruction ---
+
+[method PlayerConstruction.CalculateCumulativeUnitConstructionPowerStar, id=0x1E8BF4D2960]
+Signature: Star
+Returns: System.Void
+IL_0000: newobj    0x06003dfc
+IL_0005: stloc.0   
+IL_0006: ldloc.0   
+IL_0007: ldarg.0   
+IL_0008: ldarg.1   
+IL_0009: call      0x0600154e
+IL_000e: stfld     0x04002312
+IL_0013: ldloc.0   
+IL_0014: ldfld     0x04002312
+IL_0019: brtrue.s  IL_0046
+IL_001b: ldarg.1   
+IL_001c: callvirt  0x060016f0
+IL_0021: ldsfld    0x04002300
+IL_0026: dup       
+IL_0027: brtrue.s  IL_0040
+IL_0029: pop       
+IL_002a: ldsfld    0x040022fb
+IL_002f: ldftn     0x06003dee
+IL_0035: newobj    0x0a0004bc
+IL_003a: dup       
+IL_003b: stsfld    0x04002300
+IL_0040: callvirt  0x06000755
+IL_0045: ret       
+IL_0046: ldloc.0   
+IL_0047: ldloc.0   
+IL_0048: ldfld     0x04002312
+IL_004d: stfld     0x04002310
+IL_0052: ldloc.0   
+IL_0053: ldc.i4.1  
+IL_0054: stfld     0x04002311
+IL_0059: ldarg.1   
+IL_005a: callvirt  0x060016f0
+IL_005f: ldloc.0   
+IL_0060: ldftn     0x06003dfd
+IL_0066: newobj    0x0a0004bc
+IL_006b: callvirt  0x06000755
+IL_0070: ret       
+
+
+[method PlayerConstruction.TurnStart, id=0x1E8C31C8340]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x0600154a
+IL_0006: ldarg.0   
+IL_0007: call      0x0600154f
+IL_000c: ldarg.0   
+IL_000d: call      0x0600154c
+IL_0012: ret       
+
+
+[method PlayerConstruction.UnitConstructionTick, id=0x1E8C31C8368]
+Signature: 
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: call      0x0600151f
+IL_0006: callvirt  0x0600133d
+IL_000b: ldarg.0   
+IL_000c: ldftn     0x0600154b
+IL_0012: newobj    0x0a0002aa
+IL_0017: callvirt  0x0a0002be
+IL_001c: ret       
+
+
+[method PlayerConstruction.UnitConstructionTickStar, id=0x1E8C31C8390]
+Signature: Star
+Returns: System.Void
+IL_0000: ldarg.0   
+IL_0001: ldarg.1   
+IL_0002: call      0x0600154e
+IL_0007: stloc.0   
+IL_0008: br.s      IL_001f
+IL_000a: ldarg.1   
+IL_000b: callvirt  0x060016f0
+IL_0010: ldc.i4.0  
+IL_0011: callvirt  0x06000754
+IL_0016: ldloc.0   
+IL_0017: ldc.i4.1  
+IL_0018: sub       
+IL_0019: stloc.0   
+IL_001a: callvirt  0x060017dc
+IL_001f: ldc.i4.0  
+IL_0020: ldarg.1   
+IL_0021: callvirt  0x060016f0
+IL_0026: callvirt  0x06000750
+IL_002b: bge.s     IL_0031
+IL_002d: ldc.i4.0  
+IL_002e: ldloc.0   
+IL_002f: blt.s     IL_000a
+IL_0031: ret       
+
+Methods dumped for PlayerConstruction: 4
+
+TOTAL METHOD ENTRIES: 41

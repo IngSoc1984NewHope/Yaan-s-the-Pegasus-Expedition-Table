@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='utf-8'?>
+<CheatTable CheatEngineTableVersion="45"><CheatEntries><CheatEntry><ID>0</ID><Description>"The Pegasus Expedition | Mono discovery (NOT completed cheats)"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries><CheatEntry><ID>1</ID><Description>"01 - Export candidate classes/fields/methods to %TEMP% (RUN FIRST)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local ok, err = pcall(function()
+  if getOpenedProcessID()==0 then error('Please attach Cheat Engine to The Pegasus Expedition first.') end
+  if not monopipe then
+    local result=LaunchMonoDataCollector()
+    if not monopipe and (not result or result==0) then error('Mono Data Collector could not be started.') end
+  end
+
+  local targets={['Assembly-CSharp']=true, ['Assembly-CSharp-firstpass']=true, ['GalaxyCSharp']=true}
+  local groups={
+    {title='01 MINERALS', tokens={'mineral','ore','stockpile','resource'}},
+    {title='02 RARE EARTH', tokens={'rareearth','rareearths','rare','refinery'}},
+    {title='03 POPULATION', tokens={'population','colonist','citizen','inhabitant','migrant'}},
+    {title='04 FLEET ACTION', tokens={'fleet','movement','movepoint','actionpoint','travel','moveorder','commandpoint'}},
+    {title='05 AGENT ACTION', tokens={'agent','operative','espionage','spy','specialforce','mission','actionpoint'}},
+    {title='06 FLEET INVULNERABILITY', tokens={'damage','hull','health','hitpoint','combat','battle','ship','armor','fleet'}},
+    {title='07 INSTANT REPAIR', tokens={'repair','restore','maintenance','recovery'}},
+    {title='08 INSTANT CONSTRUCTION', tokens={'shipyard','production','construct','building','buildtime','buildqueue','manufacture','fleetbuild'}},
+  }
+  local function norm(s) return tostring(s or ''):lower():gsub('[^a-z0-9]','') end
+  local function matches(s, tokens)
+    for _,t in ipairs(tokens) do if s:find(t,1,true) then return true end end
+    return false
+  end
+  local root=os.getenv('TEMP') or os.getenv('TMP') or '.'
+  local sep=package.config:sub(1,1)
+  local function filePath(name) return root..sep..name end
+  local idx, e1=io.open(filePath('Pegasus_Mono_ClassIndex.txt'),'w')
+  if not idx then error('Could not open output file: '..tostring(e1)) end
+  local report, e2=io.open(filePath('Pegasus_Mono_Candidates.txt'),'w')
+  if not report then idx:close(); error('Could not open candidate file: '..tostring(e2)) end
+
+  local info={}
+  local assemblies=mono_enumAssemblies() or {}
+  local total=0
+  local classcount=0
+  local errors=0
+  for _,assembly in ipairs(assemblies) do
+    local img=mono_getImageFromAssembly(assembly)
+    local name=img and mono_image_get_name(img) or ''
+    local bare=tostring(name):gsub('%.dll$','')
+    if targets[bare] then
+      report:write('=== ASSEMBLY ',name,' ===\n')
+      idx:write('=== ASSEMBLY ',name,' ===\n')
+      local classes=mono_image_enumClasses(img) or {}
+      classcount=classcount+#classes
+      for _,cls in ipairs(classes) do
+        local cn=tostring(cls.classname or '')
+        local ns=tostring(cls.namespace or '')
+        local fullname=(ns~='' and (ns..'.') or '')..cn
+        idx:write(fullname,'\n')
+        local cfok, fields=pcall(mono_class_enumFields,cls.class,true)
+        if not cfok then fields={}; errors=errors+1 end
+        fields=fields or {}
+        local cmok, methods=pcall(mono_class_enumMethods,cls.class)
+        if not cmok then methods={}; errors=errors+1 end
+        methods=methods or {}
+        local normclass=norm(fullname)
+        local active={}
+        for _,g in ipairs(groups) do
+          if matches(normclass,g.tokens) then active[g.title]=true end
+        end
+        for _,field in ipairs(fields) do
+          local t=norm(field.name)
+          for _,g in ipairs(groups) do
+            if matches(t,g.tokens) then active[g.title]=true end
+          end
+        end
+        for _,method in ipairs(methods) do
+          local t=norm(method.name)
+          for _,g in ipairs(groups) do
+            if matches(t,g.tokens) then active[g.title]=true end
+          end
+        end
+        if next(active) then
+          total=total+1
+          report:write('\nCLASS ',fullname,' | classHandle=',tostring(cls.class),'\n')
+          report:write('CATEGORIES: ')
+          for _,g in ipairs(groups) do if active[g.title] then report:write('[',g.title,'] ') end end
+          report:write('\nFIELDS ('..#fields..'):\n')
+          for _,field in ipairs(fields) do
+            local ofs=tonumber(field.offset) or 0
+            report:write(string.format('  %-40s type=%-28s offset=0x%X static=%s\n',
+              tostring(field.name or ''),tostring(field.typename or ''),ofs,tostring(field.isStatic)))
+          end
+          report:write('METHODS ('..#methods..'):\n')
+          for _,method in ipairs(methods) do
+            local mn=tostring(method.name or '')
+            local special=false
+            for _,g in ipairs(groups) do if matches(norm(mn),g.tokens) then special=true; break end end
+            local suffix=''
+            if special and method.method then
+              local sigok,sig,_,rtype=pcall(mono_method_getSignature,method.method)
+              if sigok then suffix=' | signature='..tostring(sig or '')..' | returns='..tostring(rtype or '') end
+            end
+            report:write('  ',mn,suffix,'\n')
+          end
+        end
+      end
+      report:write('\n')
+    end
+  end
+  idx:close()
+  report:close()
+  showMessage('Mono scan finished. Matched classes: '..total..' / '..classcount..'\nFailed class queries: '..errors..'\n\nCandidate report:\n'..filePath('Pegasus_Mono_Candidates.txt')..'\n\nFull class index:\n'..filePath('Pegasus_Mono_ClassIndex.txt')..'\n\nThese are candidates, not verified cheat addresses. Please share the candidate report to build the working cheat table.')
+end)
+if not ok then showMessage('Pegasus Mono scan failed:\n'..tostring(err)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>2</ID><Description>"02 - Create unverified resource STATIC field candidates (no writes)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local ok,err=pcall(function()
+  if getOpenedProcessID()==0 then error('Attach CE to the game process first.') end
+  if not monopipe then
+    local r=LaunchMonoDataCollector()
+    if not monopipe and (not r or r==0) then error('Could not activate Mono features') end
+  end
+  local domains=mono_enumDomains() or {}
+  if #domains==0 then error('Mono domain not found.') end
+  local domain=domains[1]
+  local target={['Assembly-CSharp']=true,['GalaxyCSharp']=true,['Assembly-CSharp-firstpass']=true}
+  local names={'MINERALS','RARE EARTH','POPULATION'}
+  local aliases={{'mineral','ore'},{'rareearth','rareearths'},{'population','colonist','citizen'}}
+  local function norm(s) return tostring(s or ''):lower():gsub('[^a-z0-9]','') end
+  local function relevant(t, tokens)
+    for _,s in ipairs(tokens) do if t:find(s,1,true) then return true end end
+    return false
+  end
+  local vt={['System.Int16']=vtWord,['System.UInt16']=vtWord,
+    ['System.Int32']=vtDword,['System.UInt32']=vtDword,
+    ['System.Int64']=vtQword,['System.UInt64']=vtQword,
+    ['System.Single']=vtSingle,['System.Double']=vtDouble}
+  local al=getAddressList()
+  local old=al.getMemoryRecordByDescription('UNVERIFIED / Static resource field candidates')
+  if old then old.destroy() end
+  local g=al.createMemoryRecord()
+  g.Description='UNVERIFIED / Static resource field candidates'
+  g.IsGroupHeader=true
+  local buckets={}
+  for i=1,3 do
+    local x=al.createMemoryRecord()
+    x.Description=names[i]..' / not verified'
+    x.IsGroupHeader=true
+    x.appendToEntry(g)
+    buckets[i]=x
+  end
+  local count=0
+  local assemblies=mono_enumAssemblies() or {}
+  for _,assembly in ipairs(assemblies) do
+    local img=mono_getImageFromAssembly(assembly)
+    local imgname=img and tostring(mono_image_get_name(img)) or ''
+    local basename=imgname:gsub('%.dll$','')
+    if target[basename] then
+      for _,c in ipairs(mono_image_enumClasses(img) or {}) do
+        local fullname=(c.namespace and c.namespace~='' and (c.namespace..'.') or '')..tostring(c.classname or '')
+        local classlower=norm(fullname)
+        local status,fields=pcall(mono_class_enumFields,c.class,true)
+        if status and fields then
+          local base=nil
+          for _,f in ipairs(fields) do
+            local dtype=vt[tostring(f.typename or '')]
+            if f.isStatic and dtype then
+              for cat=1,3 do
+                local fl=norm(f.name)
+                if relevant(fl,aliases[cat]) or (relevant(classlower,aliases[cat]) and (fl=='value' or fl=='amount' or fl=='count' or fl=='current' or fl=='total')) then
+                  if base==nil then
+                    local sok,saddr=pcall(mono_class_getStaticFieldAddress,domain,c.class)
+                    base=(sok and tonumber(saddr)) or 0
+                  end
+                  if base and base~=0 and count&lt;150 then
+                    local offset=tonumber(f.offset) or 0
+                    local rec=al.createMemoryRecord()
+                    rec.Description='? '..fullname..'.'..tostring(f.name)..' ['..tostring(f.typename)..']'
+                    rec.Address=string.format('%X',base+offset)
+                    rec.Type=dtype
+                    rec.appendToEntry(buckets[cat])
+                    count=count+1
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  showMessage('Added '..count..' UNVERIFIED static numeric field candidates.\nNo memory values have been changed.\nThese are CURRENT-SESSION addresses, NOT stable pointers.\nIf nothing is added, the resource values may be instance fields or properties.\nDo not freeze/change any candidate before checking ownership and values.')
+end)
+if not ok then showMessage('Static field candidate scan failed:\n'..tostring(err)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>3</ID><Description>"03 - Inspect classes by partial name -&gt; %TEMP% report"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local ok,err=pcall(function()
+  if getOpenedProcessID()==0 then error('Attach CE to The Pegasus Expedition first.') end
+  if not monopipe then
+    local r=LaunchMonoDataCollector()
+    if not monopipe and (not r or r==0) then error('Could not activate Mono features.') end
+  end
+  local term=inputQuery('Mono class inspector','Part of a class name or namespace (e.g. Fleet, Resource, Agent):','Fleet')
+  if not term or term=='' then return end
+  term=term:lower()
+  local target={['Assembly-CSharp']=true,['GalaxyCSharp']=true,['Assembly-CSharp-firstpass']=true}
+  local root=os.getenv('TEMP') or os.getenv('TMP') or '.'
+  local path=root..package.config:sub(1,1)..'Pegasus_Mono_SelectedClasses.txt'
+  local f,err=io.open(path,'w')
+  if not f then error(err) end
+  local n=0
+  for _,ass in ipairs(mono_enumAssemblies() or {}) do
+    local img=mono_getImageFromAssembly(ass)
+    local imgname=img and tostring(mono_image_get_name(img)) or ''
+    if target[imgname:gsub('%.dll$','')] then
+      for _,cls in ipairs(mono_image_enumClasses(img) or {}) do
+        local name=((cls.namespace and cls.namespace~='') and cls.namespace..'.' or '')..tostring(cls.classname or '')
+        if name:lower():find(term,1,true) then
+          n=n+1
+          f:write('\nCLASS ',name,' [',imgname,']\n')
+          local fok,fields=pcall(mono_class_enumFields,cls.class,true)
+          if fok and fields then
+            f:write('FIELDS\n')
+            for _,fi in ipairs(fields) do
+              f:write(string.format('  %-42s %-30s offset=0x%X static=%s\n',
+                tostring(fi.name),tostring(fi.typename),tonumber(fi.offset) or 0,tostring(fi.isStatic)))
+            end
+          end
+          local mok,methods=pcall(mono_class_enumMethods,cls.class)
+          if mok and methods then
+            f:write('METHODS\n')
+            for _,m in ipairs(methods) do
+              local sok,sig,_,ret=pcall(mono_method_getSignature,m.method)
+              f:write('  ',tostring(m.name),'(',sok and tostring(sig or '') or '?',') -&gt; ',sok and tostring(ret or '') or '?','\n')
+            end
+          end
+        end
+      end
+    end
+  end
+  f:close()
+  showMessage('Inspected '..n..' classes.\nOutput: '..path)
+end)
+if not ok then showMessage('Inspector failed:\n'..tostring(err)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>4</ID><Description>"TARGET A | Minerals pointer - pending actual field + owner instance"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>5</ID><Description>"TARGET B | Rare Earth pointer - pending actual field + owner instance"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>6</ID><Description>"TARGET C | Population pointer - pending actual field + owner instance"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>7</ID><Description>"TARGET D | Fleet unlimited action - pending movement logic &amp; ownership checks"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>8</ID><Description>"TARGET E | Agent unlimited action - pending mission/action usage logic"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>9</ID><Description>"TARGET F | Player fleet invincible - pending damage method &amp; player faction filter"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>10</ID><Description>"TARGET G | Instant fleet repair - pending repair time/progress method"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>11</ID><Description>"TARGET H | Instant fleet construction - pending construction queue method"</Description><Options moHideChildren="1" /><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry></CheatEntries></CheatEntry></CheatEntries></CheatTable>

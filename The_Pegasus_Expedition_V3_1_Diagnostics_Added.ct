@@ -1,0 +1,578 @@
+<?xml version='1.0' encoding='utf-8'?>
+<CheatTable CheatEngineTableVersion="45"><CheatEntries><CheatEntry><ID>3000</ID><Description>"THE PEGASUS EXPEDITION | V3 | correct V2 999/99 | offline"</Description><GroupHeader>1</GroupHeader><CheatEntries><CheatEntry><ID>3001</ID><Description>"01 - MASTER: rebuild named resource symbols and player pointers"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+if PegasusV3 and PegasusV3.timer then
+  showMessage('Pegasus V3 is already active. Disable the master entry before reloading.')
+  return
+end
+local ok,err=pcall(function()
+  if getOpenedProcessID()==0 then error('Attach Cheat Engine to the game process first.') end
+  if not monopipe then LaunchMonoDataCollector() end
+  if not monopipe then error('Mono collector is unavailable.') end
+  -- Disable all V2 scripts and timers before a single V3 write. V2 forced 999/99.
+  if PegasusV2 then
+    local old=PegasusV2
+    if old.flags then old.flags.fleet=false;old.flags.operative=false;old.flags.combat=false end
+    if old.timer then old.timer.Enabled=false; pcall(function()old.timer.destroy()end);old.timer=nil end
+    if old.group then pcall(function()old.group.destroy()end);old.group=nil end
+    PegasusV2=nil
+  end
+  local P={flags={fleet=false,operative=false,combat=false}, symbols={}, tickCount=0}
+  PegasusV3=P
+  local function chk(p) return type(p)=='number' and p&gt;0x10000 and p&lt;0x7FFFFFFFFFFF end
+  P.chk=chk
+  function P.ptr(a) if not chk(a) then return nil end local v=readPointer(a); if chk(v) then return v end end
+  function P.off(cl, name)
+    if not cl or cl==0 then error('Missing Mono class: '..tostring(name)) end
+    for _, f in ipairs(mono_class_enumFields(cl,true) or {}) do
+      if f.name==name then return f.offset, f end
+    end
+    error('Missing Mono field: '..name)
+  end
+  local ids={}
+  for _,name in ipairs({'Main','Grand','GrandPlayer','PlayerResources','ResourceArray','ResourceAmounts','ResourceAmount',
+    'PlayerMovablePool','StarFleet','StarOperative','Star','UnitConstruction','StarUnit','Unit','ShipC','Player'}) do
+    local id=mono_findClass('',name)
+    if not id or id==0 then error('Cannot find class: '..name) end
+    ids[name]=id
+  end
+  P.ids=ids
+  local a={}
+  local function F(klass,name) a[klass..'.'..name]=P.off(ids[klass],name) end
+  for _,pair in ipairs({
+    {'Main','Grand'},{'Main','HumanPlayer'},
+    {'Grand','&lt;HumanPlayer&gt;k__BackingField'},
+    {'GrandPlayer','&lt;Resources&gt;k__BackingField'},{'GrandPlayer','&lt;MovablePool&gt;k__BackingField'},
+    {'GrandPlayer','&lt;Stars&gt;k__BackingField'},
+    {'PlayerResources','&lt;Resources&gt;k__BackingField'},{'PlayerResources','ResourceNameIndex'},
+    {'ResourceArray','values'},{'ResourceAmounts','Data'}, {'ResourceAmount','Type'}, {'ResourceAmount','Amount'},
+    {'PlayerMovablePool','fleets'},{'PlayerMovablePool','operatives'},
+    {'StarFleet','&lt;Owner&gt;k__BackingField'},{'StarFleet','&lt;MovementPoints&gt;k__BackingField'},
+    {'StarFleet','&lt;RepairTurnsLeft&gt;k__BackingField'}, {'StarFleet','&lt;IsRepairing&gt;k__BackingField'},
+    {'StarFleet','&lt;Units&gt;k__BackingField'}, {'StarFleet','&lt;Flagship&gt;k__BackingField'},
+    {'StarOperative','&lt;Owner&gt;k__BackingField'},{'StarOperative','&lt;MovementPoints&gt;k__BackingField'},
+    {'StarOperative','&lt;ActionPoints&gt;k__BackingField'},
+    {'Star','&lt;Owner&gt;k__BackingField'}, {'Star','&lt;UnitConstruction&gt;k__BackingField'},
+    {'UnitConstruction','queue'},
+    {'StarUnit','&lt;RemainingConstruction&gt;k__BackingField'}, {'StarUnit','&lt;CumulativeRemainingConstruction&gt;k__BackingField'},
+    {'Player','&lt;Units&gt;k__BackingField'}, {'Unit','Owner'}, {'Unit','&lt;Ships&gt;k__BackingField'},
+    {'ShipC','health'}, {'ShipC','maximumHealth'},
+  }) do F(pair[1],pair[2]) end
+  P.a=a
+  -- This main static field is a reliable *runtime root*, not an address saved from a previous process.
+  P.domain=nil; P.static=nil
+  for _,domain in ipairs(mono_enumDomains() or {}) do
+    local success,base=pcall(mono_class_getStaticFieldAddress,domain,ids.Main)
+    if success and chk(base) then
+      local g=P.ptr(base+a['Main.Grand'])
+      if g then P.domain=domain; P.static=base; break end
+    end
+  end
+  if not P.static then error('Main.Grand is null. Load a saved campaign and retry.') end
+  local al=getAddressList()
+  function P.player()
+    local grand=P.ptr(P.static+a['Main.Grand'])
+    if not grand then return end
+    return P.ptr(grand+a['Grand.&lt;HumanPlayer&gt;k__BackingField'])
+  end
+  function P.combatPlayer()
+    return P.ptr(P.static+a['Main.HumanPlayer'])
+  end
+  function P.list(ls,maxnum)
+    local found={}
+    if not ls then return found end
+    local arr=P.ptr(ls+0x10)
+    local n=readInteger(ls+0x18)
+    if not arr or not n or n&lt;0 or n&gt;(maxnum or 4096) then return found end
+    for i=0,n-1 do
+      local v=P.ptr(arr+0x20+i*8)
+      if v then found[#found+1]=v end
+    end
+    return found
+  end
+  function P.fleets()
+    local h=P.player(); if not h then return {} end
+    local pool=P.ptr(h+a['GrandPlayer.&lt;MovablePool&gt;k__BackingField'])
+    if not pool then return {} end
+    local l=P.ptr(pool+a['PlayerMovablePool.fleets']); local r={}
+    for _,f in ipairs(P.list(l,2048)) do
+      if P.ptr(f+a['StarFleet.&lt;Owner&gt;k__BackingField'])==h then r[#r+1]=f end
+    end
+    return r
+  end
+  function P.operatives()
+    local h=P.player(); if not h then return {} end
+    local pool=P.ptr(h+a['GrandPlayer.&lt;MovablePool&gt;k__BackingField'])
+    if not pool then return {} end
+    local l=P.ptr(pool+a['PlayerMovablePool.operatives']); local r={}
+    for _,op in ipairs(P.list(l,2048)) do
+      if P.ptr(op+a['StarOperative.&lt;Owner&gt;k__BackingField'])==h then r[#r+1]=op end
+    end
+    return r
+  end
+  function P.resourceNames()
+    local result={}
+    local sb
+    local success,base=pcall(mono_class_getStaticFieldAddress,P.domain,ids.PlayerResources)
+    if success and chk(base) then sb=base end
+    local arr=sb and P.ptr(sb+a['PlayerResources.ResourceNameIndex'])
+    local n=arr and readQword(arr+0x18)
+    if n and n&gt;=1 and n&lt;80 then
+      for i=0,n-1 do
+        local st=P.ptr(arr+0x20+i*8)
+        if st then
+          local chars=readInteger(st+0x10)
+          if chars and chars&gt;0 and chars&lt;100 then result[i]=readString(st+0x14,chars,true) end
+        end
+      end
+    end
+    return result
+  end
+  function P.resourceAddresses()
+    local h=P.player(); if not h then return {},'human player not loaded' end
+    local pRes=P.ptr(h+a['GrandPlayer.&lt;Resources&gt;k__BackingField'])
+    local raw=pRes and P.ptr(pRes+a['PlayerResources.&lt;Resources&gt;k__BackingField'])
+    if not raw then return {},'resources object not loaded' end
+    local okClass,clId=pcall(mono_object_getClass,raw)
+    if not okClass or not clId or clId==0 then return {},'could not identify resources class' end
+    local name=mono_class_getName(clId)
+    local vals={}
+    if name=='ResourceArray' then
+      local arr=P.ptr(raw+a['ResourceArray.values'])
+      local size=arr and readQword(arr+0x18)
+      if not size or size&lt;1 or size&gt;64 then return {},'float array length invalid' end
+      for i=0,size-1 do vals[i]=arr+0x20+i*4 end
+    elseif name=='ResourceAmounts' then
+      local ls=P.ptr(raw+a['ResourceAmounts.Data'])
+      for _,item in ipairs(P.list(ls,128)) do
+        local t=readInteger(item+a['ResourceAmount.Type'])
+        if t and t&gt;=0 and t&lt;64 then vals[t]=item+a['ResourceAmount.Amount'] end
+      end
+    else return {},'unrecognized runtime class '..tostring(name) end
+    return vals,name
+  end
+  -- Stable CE symbols for persistent named resource records in the table.
+  local function clearResourceSymbols()
+    for i=0,5 do
+      if P.symbols[i] then pcall(unregisterSymbol,'Pegasus3_Resource_'..i);P.symbols[i]=nil end
+    end
+  end
+  P.clearResourceSymbols=clearResourceSymbols
+  function P.refreshResources()
+    local addresses,ctype=P.resourceAddresses()
+    if not next(addresses) then
+      P.lastResourceError=ctype
+      clearResourceSymbols()  -- Never display stale pointers when campaign is unloaded.
+      return
+    end
+    for i=0,5 do
+      local addr=addresses[i]
+      local key='Pegasus3_Resource_'..i
+      if addr and P.symbols[i]~=addr then
+        pcall(unregisterSymbol,key)
+        registerSymbol(key,addr,true) -- resolved at runtime, not saved to .CT
+        P.symbols[i]=addr
+      elseif not addr and P.symbols[i] then
+        pcall(unregisterSymbol,key)
+        P.symbols[i]=nil
+      end
+    end
+    P.lastResourceError=nil
+  end
+  -- IMPORTANT: 999/99 could be out of bounds and can make movement fail.
+  -- Fleet has two ordinary movement points per turn; operatives move at fleet speed
+  -- and normally perform one operation per turn (game guide / analysis).
+  P.cap={fleet=2,operativeMove=2,operativeAction=1}
+  function P.recoverAbnormalPoints()
+    local fleetFixed,opMoveFixed,opActionFixed=0,0,0
+    for _,f in ipairs(P.fleets()) do
+      local addr=f+a['StarFleet.&lt;MovementPoints&gt;k__BackingField']
+      local v=readInteger(addr)
+      if v and v&gt;P.cap.fleet and v&lt;1000000 then
+        if writeInteger(addr,P.cap.fleet) then fleetFixed=fleetFixed+1 end
+      end
+    end
+    for _,o in ipairs(P.operatives()) do
+      local m=o+a['StarOperative.&lt;MovementPoints&gt;k__BackingField']
+      local ac=o+a['StarOperative.&lt;ActionPoints&gt;k__BackingField']
+      local vm=readInteger(m);local va=readInteger(ac)
+      if vm and vm&gt;P.cap.operativeMove and vm&lt;1000000 then
+        if writeInteger(m,P.cap.operativeMove) then opMoveFixed=opMoveFixed+1 end
+      end
+      if va and va&gt;P.cap.operativeAction and va&lt;1000000 then
+        if writeInteger(ac,P.cap.operativeAction) then opActionFixed=opActionFixed+1 end
+      end
+    end
+    return fleetFixed,opMoveFixed,opActionFixed
+  end
+  -- Continuous refills, bounded at legitimate natural values; no 999/99 writes.
+  -- Only on the active player's fleet / operative objects, never enemy objects.
+  function P.applyMovement()
+    if P.flags.fleet then
+      for _,f in ipairs(P.fleets()) do
+        local addr=f+a['StarFleet.&lt;MovementPoints&gt;k__BackingField']
+        local n=readInteger(addr)
+        if n and n&gt;=0 and n&lt;1000000 and n~=P.cap.fleet then
+          writeInteger(addr,P.cap.fleet)
+        end
+      end
+    end
+    if P.flags.operative then
+      for _,o in ipairs(P.operatives()) do
+        local mp=o+a['StarOperative.&lt;MovementPoints&gt;k__BackingField']
+        local ap=o+a['StarOperative.&lt;ActionPoints&gt;k__BackingField']
+        local m=readInteger(mp);local n=readInteger(ap)
+        if m and m&gt;=0 and m&lt;1000000 and m~=P.cap.operativeMove then writeInteger(mp,P.cap.operativeMove) end
+        if n and n&gt;=0 and n&lt;1000000 and n~=P.cap.operativeAction then writeInteger(ap,P.cap.operativeAction) end
+      end
+    end
+  end
+  function P.regenerateCombatShips()
+    local hum=P.combatPlayer(); if not hum then return 0 end
+    local units=P.ptr(hum+a['Player.&lt;Units&gt;k__BackingField']); local count=0
+    local health=a['ShipC.health'];local maximum=a['ShipC.maximumHealth']
+    if maximum-health~=4 then return 0 end
+    for _,unit in ipairs(P.list(units,2048)) do
+      if P.ptr(unit+a['Unit.Owner'])==hum then
+        local ships=P.ptr(unit+a['Unit.&lt;Ships&gt;k__BackingField'])
+        for _,ship in ipairs(P.list(ships,4096)) do
+          local max=readInteger(ship+maximum)
+          local hp=readInteger(ship+health)
+          if hp and max and hp&gt;0 and hp&lt;max and max&lt;2000000000 then
+            if writeInteger(ship+health,max) then count=count+1 end
+          end
+        end
+      end
+    end
+    return count
+  end
+  function P.instantBuildOnce()
+    local hum=P.player(); if not hum then error('No human player loaded') end
+    local cnt,unique=0,{}
+    local function complete(unit)
+      if not unit or unique[unit] then return end
+      unique[unit]=true
+      local r=unit+a['StarUnit.&lt;RemainingConstruction&gt;k__BackingField']
+      local c=unit+a['StarUnit.&lt;CumulativeRemainingConstruction&gt;k__BackingField']
+      local remaining=readInteger(r)
+      if remaining and remaining&gt;0 and remaining&lt;100000000 then
+        writeInteger(r,0);writeInteger(c,0);cnt=cnt+1
+      end
+    end
+    for _,star in ipairs(P.list(P.ptr(hum+a['GrandPlayer.&lt;Stars&gt;k__BackingField']),4096)) do
+      if P.ptr(star+a['Star.&lt;Owner&gt;k__BackingField'])==hum then
+        local cons=P.ptr(star+a['Star.&lt;UnitConstruction&gt;k__BackingField'])
+        local queue=cons and P.ptr(cons+a['UnitConstruction.queue'])
+        for _,unit in ipairs(P.list(queue,2048)) do complete(unit) end
+      end
+    end
+    for _,f in ipairs(P.fleets()) do
+      local flist=P.ptr(f+a['StarFleet.&lt;Units&gt;k__BackingField'])
+      for _,unit in ipairs(P.list(flist,2048)) do complete(unit) end
+      complete(P.ptr(f+a['StarFleet.&lt;Flagship&gt;k__BackingField']))
+    end
+    return cnt
+  end
+  function P.repairOnce()
+    local mid=mono_findMethod('','StarFleet','RepairByAmount')
+    if not mid or mid==0 then error('StarFleet.RepairByAmount not found') end
+    local fleets=P.fleets()
+    if #fleets==0 then error('No player fleets found') end
+    local failures=0; local successes=0
+    for _,fleet in ipairs(fleets) do
+      -- Explicit experimental managed call; never touch enemy fleets.
+      local okCall=pcall(mono_invoke_method,P.domain,mid,fleet,{{type=12,value=9999.0}})
+      if okCall then
+        successes=successes+1
+        local r=fleet+a['StarFleet.&lt;RepairTurnsLeft&gt;k__BackingField']
+        local n=readInteger(r)
+        if n and n&gt;0 and n&lt;2000 then writeInteger(r,0) end
+      else failures=failures+1 end
+    end
+    return successes,failures
+  end
+  function P.diag()
+    local path=(os.getenv('TEMP') or '.')..'\\Pegasus_V3_Diagnostics.txt'
+    local f=assert(io.open(path,'w'))
+    local function ln(s) f:write(s,'\n') end
+    ln('Pegasus V3: runtime values (no modification during export)')
+    ln('Human Player = '..tostring(P.player()))
+    ln('Resource container = '..tostring(select(2,P.resourceAddresses())))
+    local ar=P.resourceAddresses()
+    for i=0,5 do
+      local value=ar[i] and readFloat(ar[i]) or nil
+      ln(string.format('RESOURCE enum=%d addr=%s value=%s',i,tostring(ar[i]),tostring(value)))
+    end
+    local fleets=P.fleets();local ops=P.operatives()
+    ln('Player fleets='..#fleets..' operatives='..#ops)
+    for i,v in ipairs(fleets) do
+      ln('FLEET '..i..' move='..tostring(readInteger(v+a['StarFleet.&lt;MovementPoints&gt;k__BackingField'])))
+    end
+    for i,v in ipairs(ops) do
+      ln('OPERATIVE '..i..' move='..tostring(readInteger(v+a['StarOperative.&lt;MovementPoints&gt;k__BackingField']))..' action='..tostring(readInteger(v+a['StarOperative.&lt;ActionPoints&gt;k__BackingField'])))
+    end
+    f:close();return path
+  end
+  function P.exportMovementIL()
+    local path=(os.getenv('TEMP') or '.')..'\\Pegasus_V3_Movement_IL.txt'
+    local f=assert(io.open(path,'w'))
+    local methods={
+      Movable={'CanMove','CanMoveSilent','CanMoveToStar','get_HasMoved','get_MovementPoints',
+        'SetMovementPoints','set_MovementPoints','ConsumeMovementPoints','TryMove','Move','MoveToStar',
+        'TestCreateMovementError','StartTurn'},
+      StarFleet={'CanMove','CanMoveSilent','UnrestrictedMove','Move','StartTurn','get_IsGarrisonFleet'},
+      StarOperative={'get_CanOperate','get_HasActionPoints','ResetActionPoints',
+        'SetActionPoints','ConsumeActionPoints','SpendActionPoint','StartTurn','get_IsUnusable'}
+    }
+    local total=0
+    for _,klass in ipairs({'Movable','StarFleet','StarOperative'}) do
+      for _,methodName in ipairs(methods[klass]) do
+        f:write('\n=== ',klass,'.',methodName,' ===\n')
+        local id=mono_findMethod('',klass,methodName)
+        if id and id~=0 then
+          local ok,code=pcall(mono_method_disassemble,id)
+          if ok and type(code)=='string' then
+            f:write(code,'\n');total=total+1
+          else f:write('Disassembly failed: ',tostring(code),'\n') end
+        else f:write('Method not found\n') end
+      end
+    end
+    f:close();return path,total
+  end
+  P.refreshResources()
+  local t=createTimer(nil,false)
+  P.timer=t
+  t.Interval=450
+  t.OnTimer=function()
+    if not PegasusV3 or PegasusV3~=P or getOpenedProcessID()==0 then t.Enabled=false;return end
+    local success,msg=pcall(function()
+      P.tickCount=P.tickCount+1
+      if P.tickCount%5==0 then P.refreshResources() end
+      P.applyMovement()
+      if P.flags.combat then P.regenerateCombatShips() end
+    end)
+    if not success then
+      t.Enabled=false
+      showMessage('Pegasus V3 timer stopped safely due to error:\n'..tostring(msg))
+    end
+  end
+  t.Enabled=true
+  showMessage('Pegasus V3 active. Named resource symbols: '..tostring((function() local n=0;for _ in pairs(P.symbols) do n=n+1 end;return n end)())..'/6'..'\nFirst run 04 to fix the old 999/99 points, then test 02 / 03 separately.'..'\nMovement / action are capped at 2 / 2 / 1, NOT 999 / 99.')
+end)
+if not ok then PegasusV3=nil;showMessage('Pegasus V3 activation failed:\n'..tostring(err)) end
+[DISABLE]
+if PegasusV3 then
+  local P=PegasusV3
+  if P.timer then P.timer.destroy() end
+  if P.clearResourceSymbols then P.clearResourceSymbols() end
+  PegasusV3=nil
+end
+</AssemblerScript></CheatEntry><CheatEntry><ID>3002</ID><Description>"Resources | persistent named Mono-resolved pointers | Float | enable 01"</Description><GroupHeader>1</GroupHeader><CheatEntries><CheatEntry><ID>3003</ID><Description>"矿物 | Minerals (enum 0, Float, runtime pointer)"</Description><VariableType>Float</VariableType><Address>Pegasus3_Resource_0</Address></CheatEntry><CheatEntry><ID>3004</ID><Description>"稀土 | Rare Earth (enum 1, Float, runtime pointer)"</Description><VariableType>Float</VariableType><Address>Pegasus3_Resource_1</Address></CheatEntry><CheatEntry><ID>3005</ID><Description>"人口 | Population (enum 2, Float, runtime pointer)"</Description><VariableType>Float</VariableType><Address>Pegasus3_Resource_2</Address></CheatEntry><CheatEntry><ID>3006</ID><Description>"科技 | Science (enum 3, Float, runtime pointer)"</Description><VariableType>Float</VariableType><Address>Pegasus3_Resource_3</Address></CheatEntry><CheatEntry><ID>3007</ID><Description>"未知资源 | Unknown (enum 4, Float, runtime pointer)"</Description><VariableType>Float</VariableType><Address>Pegasus3_Resource_4</Address></CheatEntry><CheatEntry><ID>3008</ID><Description>"幸福度 | Happiness (%) (enum 5, Float, runtime pointer)"</Description><VariableType>Float</VariableType><Address>Pegasus3_Resource_5</Address></CheatEntry></CheatEntries></CheatEntry><CheatEntry><ID>3009</ID><Description>"02 - FLEET: SAFE bounded movement refill to 2 (continuous)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+if PegasusV3 then PegasusV3.flags.fleet=true else showMessage('Enable 01 - V3 Master first') end
+[DISABLE]
+if PegasusV3 then PegasusV3.flags.fleet=false end
+</AssemblerScript></CheatEntry><CheatEntry><ID>3010</ID><Description>"03 - OPERATIVE: SAFE move=2 action=1 (continuous)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+if PegasusV3 then PegasusV3.flags.operative=true else showMessage('Enable 01 - V3 Master first') end
+[DISABLE]
+if PegasusV3 then PegasusV3.flags.operative=false end
+</AssemblerScript></CheatEntry><CheatEntry><ID>3011</ID><Description>"04 - EMERGENCY: restore old V2 movement 999/99 to 2/2/1 (once)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local P=PegasusV3
+if not P then showMessage('Enable 01 - V3 Master first.');return end
+local ok,v1,v2,v3=pcall(function() return P.recoverAbnormalPoints() end)
+if ok then showMessage('Restored invalid points: fleets='..tostring(v1)..', operative movement='..tostring(v2)..', operative actions='..tostring(v3)..'. Test an ordinary movable fleet. Garrison fleets cannot move.') else showMessage('Pegasus V3 error:\n'..tostring(v1)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>3012</ID><Description>"05 - Combat ship regeneration (experimental, continuous)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+if PegasusV3 then PegasusV3.flags.combat=true else showMessage('Enable 01 - V3 Master first') end
+[DISABLE]
+if PegasusV3 then PegasusV3.flags.combat=false end
+</AssemblerScript></CheatEntry><CheatEntry><ID>3013</ID><Description>"06 - Finish owned ship construction queues (once, experimental)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local P=PegasusV3
+if not P then showMessage('Enable 01 - V3 Master first.');return end
+local ok,v1,v2,v3=pcall(function() return P.instantBuildOnce() end)
+if ok then showMessage('Set construction remaining to zero for '..tostring(v1)..' objects. Check after the next construction tick.') else showMessage('Pegasus V3 error:\n'..tostring(v1)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>3014</ID><Description>"07 - Repair own fleets via Mono (once, experimental)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local P=PegasusV3
+if not P then showMessage('Enable 01 - V3 Master first.');return end
+local ok,v1,v2,v3=pcall(function() return P.repairOnce() end)
+if ok then showMessage('Invoked repair on '..tostring(v1)..' own fleets, failures='..tostring(v2)..'. Verify costs and health.') else showMessage('Pegasus V3 error:\n'..tostring(v1)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>3015</ID><Description>"08 - Export V3 runtime diagnosis (read only)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local P=PegasusV3
+if not P then showMessage('Enable 01 - V3 Master first.');return end
+local ok,v1,v2,v3=pcall(function() return P.diag() end)
+if ok then showMessage('Created '..tostring(v1)) else showMessage('Pegasus V3 error:\n'..tostring(v1)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>3016</ID><Description>"09 - Export movement check method IL (read only)"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local P=PegasusV3
+if not P then showMessage('Enable 01 - V3 Master first.');return end
+local ok,v1,v2,v3=pcall(function() return P.exportMovementIL() end)
+if ok then showMessage('Exported '..tostring(v2)..' movement methods to '..tostring(v1)) else showMessage('Pegasus V3 error:\n'..tostring(v1)) end
+[DISABLE]
+</AssemblerScript></CheatEntry><CheatEntry><ID>3017</ID><Description>"IMPORTANT: disable OLD V2 02/03 and master; use EMERGENCY 04 first"</Description><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>3018</ID><Description>"IMPORTANT: disable continuous movement when diagnosing movement blockers"</Description><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>3019</ID><Description>"IMPORTANT: values outside natural range can break movement, do not set 999"</Description><GroupHeader>1</GroupHeader><CheatEntries /></CheatEntry><CheatEntry><ID>9100</ID><Description>"10 - READ ONLY: export combat, repair and construction IL + runtime snapshot"</Description><VariableType>Auto Assembler Script</VariableType><AssemblerScript>{$lua}
+[ENABLE]
+if syntaxcheck then return end
+local P=PegasusV3
+if not P then
+  showMessage('请先在 V3 表格启用 01 MASTER。\nEnable V3 01 MASTER before using this read-only report.')
+  return
+end
+local ok,result=pcall(function()
+  local path=(os.getenv('TEMP') or '.')..'\\Pegasus_V3_OtherFunctions_Report.txt'
+  local f=assert(io.open(path,'w'))
+  local function emit(s) f:write(tostring(s or ''),'\n') end
+  local function hex(x) if type(x)=='number' and x&gt;0 then return string.format('0x%X',x) end return 'nil' end
+  local function safe(fn,...) local ok,v=pcall(fn,...); if ok then return v end end
+  local function fieldOffset(className,fieldName)
+    local id=P.ids[className] or safe(mono_findClass,'',className)
+    if not id or id==0 then return nil end
+    for _,x in ipairs(safe(mono_class_enumFields,id,true) or {}) do
+      if x.name==fieldName and not x.isStatic then return x.offset end
+    end
+  end
+  local function pfield(className,fieldName,ptr)
+    local o=fieldOffset(className,fieldName)
+    return o and P.ptr(ptr+o) or nil
+  end
+  local function ifield(className,fieldName,ptr)
+    local o=fieldOffset(className,fieldName)
+    return o and safe(readInteger,ptr+o) or nil
+  end
+  local function bfield(className,fieldName,ptr)
+    local o=fieldOffset(className,fieldName)
+    return o and safe(readBytes,ptr+o,1,false) or nil
+  end
+  local function listobj(x,maxn)
+    if not x then return {} end
+    return safe(P.list,x,maxn) or {}
+  end
+  emit('THE PEGASUS EXPEDITION | V3 supplemental read-only diagnostics')
+  emit('No game fields or managed methods are changed by this script.')
+  emit('Human GrandPlayer: '..hex(P.player()))
+  emit('Combat Player (Main.HumanPlayer): '..hex(P.combatPlayer()))
+  emit('')
+  emit('=== OWNED FLEET REPAIR STATUS (up to first 30) ===')
+  local fleets=P.fleets();emit('Owned fleets: '..#fleets)
+  for i=1,math.min(#fleets,30) do
+    local v=fleets[i]
+    emit(string.format('Fleet %d ptr=%s repairTurnsLeft=%s isRepairing=%s',i,hex(v),
+      tostring(ifield('StarFleet','&lt;RepairTurnsLeft&gt;k__BackingField',v)),
+      tostring(bfield('StarFleet','&lt;IsRepairing&gt;k__BackingField',v))))
+  end
+  emit('')
+  emit('=== OWNED SHIP CONSTRUCTION QUEUES (up to 70 stars, up to 15 units per star) ===')
+  local hum=P.player()
+  if hum then
+    local stars=listobj(pfield('GrandPlayer','&lt;Stars&gt;k__BackingField',hum),4096)
+    emit('Stars in human list: '..#stars)
+    local queuedStars=0;local queuedUnits=0
+    for i=1,math.min(#stars,70) do
+      local star=stars[i]
+      if pfield('Star','&lt;Owner&gt;k__BackingField',star)==hum then
+        local cons=pfield('Star','&lt;UnitConstruction&gt;k__BackingField',star)
+        local q=listobj(cons and pfield('UnitConstruction','queue',cons),2048)
+        if #q&gt;0 then
+          queuedStars=queuedStars+1
+          emit(string.format('Star #%d: %s queue=%d',i,hex(star),#q))
+          for j=1,math.min(#q,15) do
+            local unit=q[j]
+            queuedUnits=queuedUnits+1
+            emit(string.format('  shipQueue %d unit=%s remaining=%s cumulative=%s',j,hex(unit),
+              tostring(ifield('StarUnit','&lt;RemainingConstruction&gt;k__BackingField',unit)),
+              tostring(ifield('StarUnit','&lt;CumulativeRemainingConstruction&gt;k__BackingField',unit))))
+          end
+        end
+      end
+    end
+    emit('Queued owned stars: '..queuedStars..'; ship entries sampled: '..queuedUnits)
+  end
+  emit('')
+  emit('=== BATTLE UNITS / SHIPS (first 8 units, up to 8 ships each) ===')
+  local combatPlayer=P.combatPlayer()
+  if combatPlayer then
+    local units=listobj(pfield('Player','&lt;Units&gt;k__BackingField',combatPlayer),2048)
+    emit('Combat human unit count = '..#units)
+    for i=1,math.min(#units,8) do
+      local unit=units[i]
+      local owner=pfield('Unit','Owner',unit)
+      local ships=listobj(pfield('Unit','&lt;Ships&gt;k__BackingField',unit),4096)
+      emit(string.format('Battle unit %d ptr=%s owner=%s isHuman=%s ships=%d',i,hex(unit),hex(owner),tostring(owner==combatPlayer),#ships))
+      for j=1,math.min(#ships,8) do
+        local ship=ships[j]
+        emit(string.format('  ship %d obj=%s hpRaw=%s maxRaw=%s',j,hex(ship),
+          tostring(ifield('ShipC','health',ship)),tostring(ifield('ShipC','maximumHealth',ship))))
+      end
+    end
+  else
+    emit('No Main.HumanPlayer object; enter a real-time battle for a meaningful combat snapshot.')
+  end
+  emit('')
+  emit('=== MONO METHOD SIGNATURES + IL (READ ONLY) ===')
+  local targets={
+    ShipC={'TakeDamage','TakeWaveDamage','get_Alive','get_HealthFraction'},
+    Unit={'TakeDamage','DamageAllShips','CalculateDamageAmount','DealDamageToTarget','get_Health','get_HealthFraction'},
+    Player={'CalculateCombatHealth','CalculateTotalCombatHealth','HealthAdder'},
+    StarFleet={'RepairByAmount','RepairCost','RepairTime','SelfRepair','TickRepair','CancelRepair',
+       'SetRepairTurns','SetRepairing','TakeAutoResolveDamage','TakeHazardSystemDamage',
+       'SetMinimumHealth','get_HasRepairTurnsLeft','get_HasPaidRepairCost'},
+    StarUnit={'RepairUnit','ConstructionTick','StartConstruction','SetHealthFraction',
+       'get_ConstructionProgressFraction','get_UnderConstruction'},
+    UnitConstruction={'RefreshAll','RefreshDisplay','Remove'},
+    PlayerConstruction={'UnitConstructionTick','UnitConstructionTickStar',
+       'CalculateCumulativeUnitConstructionPowerStar','TurnStart'},
+  }
+  local classes={'ShipC','Unit','Player','StarFleet','StarUnit','UnitConstruction','PlayerConstruction'}
+  local total=0
+  for _,name in ipairs(classes) do
+    local id=P.ids[name] or safe(mono_findClass,'',name)
+    local methods=id and safe(mono_class_enumMethods,id) or {}
+    local wanted={}
+    for _,n in ipairs(targets[name]) do wanted[n]=true end
+    emit('')
+    emit('--- class '..name..' ---')
+    if not id or id==0 then emit('Class not present')
+    else
+      local matches=0
+      for _,m in ipairs(methods) do
+        if wanted[m.name] then
+          matches=matches+1;total=total+1
+          emit(string.format('\n[method %s.%s, id=%s]',name,m.name,hex(m.method)))
+          local okSig,sig,pnames,rtype=pcall(mono_method_getSignature,m.method)
+          emit('Signature: '..(okSig and tostring(sig) or '(signature unavailable)'))
+          if okSig then emit('Returns: '..tostring(rtype)) end
+          local okIL,il=pcall(mono_method_disassemble,m.method)
+          if okIL and type(il)=='string' then emit(il:sub(1,20000))
+          else emit('IL unavailable: '..tostring(il)) end
+        end
+      end
+      emit('Methods dumped for '..name..': '..matches)
+    end
+  end
+  emit('\nTOTAL METHOD ENTRIES: '..total)
+  f:close()
+  return path,total,#fleets
+end)
+if ok then
+  showMessage('Read-only report exported.\n'..tostring(result)..'\n\nOpen %TEMP% and upload the report.\nTo repeat: uncheck this entry and check again.')
+else
+  showMessage('Report failed (no memory changes): '..tostring(result))
+end
+[DISABLE]
+</AssemblerScript></CheatEntry></CheatEntries></CheatEntry></CheatEntries></CheatTable>
